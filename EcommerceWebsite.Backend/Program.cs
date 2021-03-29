@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EcommerceWebsite_API
+namespace EcommerceWebsite.Backend
 {
     public class Program
     {
