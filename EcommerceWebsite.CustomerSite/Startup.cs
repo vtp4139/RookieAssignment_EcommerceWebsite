@@ -74,6 +74,7 @@ namespace EcommerceWebsite.CustomerSite
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

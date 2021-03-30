@@ -10,5 +10,7 @@ namespace EcommerceWebsite.Backend.Data
             : base(options)
         {
         }
+
+        public DbSet<Categories> Categories { get; set; }
     }
 }
