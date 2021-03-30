@@ -42,15 +42,15 @@ namespace EcommerceWebsite.Backend.IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "https://localhost:44387/signin-oidc" },
+                    RedirectUris = { "https://localhost:44374/signin-oidc" },
 
-                    PostLogoutRedirectUris = { "https://localhost:44387/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:44374/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "rookieshop.api"
+                        "ecommercewebsite.api"
                     }
                 },
 
@@ -63,15 +63,15 @@ namespace EcommerceWebsite.Backend.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"https://localhost:44374/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"https://localhost:44374/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"https://localhost:44374" },
+                    RedirectUris =           { $"https://localhost:44387/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"https://localhost:44387/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"https://localhost:44387" },
 
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "rookieshop.api"
+                        "ecommercewebsite.api"
                     }
                 },
             };

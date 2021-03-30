@@ -32,7 +32,7 @@ namespace EcommerceWebsite.CustomerSite
                  .AddCookie("Cookies")
                  .AddOpenIdConnect("oidc", options =>
                  {
-                     options.Authority = "https://localhost:44374";
+                     options.Authority = "https://localhost:44387";
                      options.RequireHttpsMetadata = false;
                      options.GetClaimsFromUserInfoEndpoint = true;
 
