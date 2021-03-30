@@ -12,7 +12,7 @@ namespace EcommerceWebsite.Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize("Bearer")]
+    [Authorize("Bearer")]
     public class CategoriesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -53,7 +53,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> PutCategories(int id, CategoriesFormVm CategoriesFormVm)
         {
             var Categories = await _context.Categories.FindAsync(id);
