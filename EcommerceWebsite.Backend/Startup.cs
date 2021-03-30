@@ -39,6 +39,7 @@ namespace EcommerceWebsite.Backend
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //*Identity server config
             services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -119,6 +120,7 @@ namespace EcommerceWebsite.Backend
 
             app.UseRouting();
 
+            //Use UseIdentityServer after config
             app.UseIdentityServer();
             app.UseAuthorization();
 
