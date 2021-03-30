@@ -10,13 +10,13 @@ namespace EcommerceWebsite.Backend.Models
 {
     public class OrderDetail
     {
-        [Key]
-        public int OrderDetailId  { get; set; }
-        //[ForeignKey("OrderDetailFK")]
+        //[Key]
+        //public int OrderDetailId  { get; set; }
+        [ForeignKey("OrderDetailFK")]
         public int OrderID { get; set; }
         public virtual Order Order { get; set; }
 
-        //[ForeignKey("ProductFK")]
+        [ForeignKey("ProductFK")]
         public int ProductID { get; set; }
         public virtual Product Product { get; set; }
 

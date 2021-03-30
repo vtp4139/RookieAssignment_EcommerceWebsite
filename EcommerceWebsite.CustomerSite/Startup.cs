@@ -74,6 +74,7 @@ namespace EcommerceWebsite.CustomerSite
 
             app.UseRouting();
 
+            //Add UseAuthentication after config
             app.UseAuthentication();
             app.UseAuthorization();
 
