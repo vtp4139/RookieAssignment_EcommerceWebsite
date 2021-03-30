@@ -52,7 +52,7 @@ namespace EcommerceWebsite.Backend
                .AddInMemoryClients(IdentityServerConfig.Clients)
                .AddAspNetIdentity<User>()
                .AddProfileService<CustomProfileService>()
-               .AddDeveloperSigningCredential(); 
+               .AddDeveloperSigningCredential(); // not recommended for production - you need to store your key material somewhere secure
 
             services.AddAuthentication()
                 .AddLocalApi("Bearer", option =>
@@ -110,7 +110,8 @@ namespace EcommerceWebsite.Backend
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");                
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -118,9 +119,7 @@ namespace EcommerceWebsite.Backend
 
             app.UseRouting();
 
-            //*Add UseIdentityServer after configure services
             app.UseIdentityServer();
-
             app.UseAuthorization();
 
             app.UseSwagger();

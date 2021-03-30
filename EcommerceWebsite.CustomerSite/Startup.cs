@@ -32,7 +32,6 @@ namespace EcommerceWebsite.CustomerSite
                  .AddCookie("Cookies")
                  .AddOpenIdConnect("oidc", options =>
                  {
-                     //*Change localhost to backend 
                      options.Authority = "https://localhost:44387";
                      options.RequireHttpsMetadata = false;
                      options.GetClaimsFromUserInfoEndpoint = true;
@@ -67,6 +66,7 @@ namespace EcommerceWebsite.CustomerSite
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -74,9 +74,7 @@ namespace EcommerceWebsite.CustomerSite
 
             app.UseRouting();
 
-            //*Add UseAuthentication after configure services
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
