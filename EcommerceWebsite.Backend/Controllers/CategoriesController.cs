@@ -15,93 +15,93 @@ namespace EcommerceWebsite.Backend.Controllers
     //[Authorize("Bearer")]
     public class CategoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        //public CategoriesController(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<CategoriesVm>>> GetCategories()
-        {
-            return await _context.Categories
-                .Select(x => new CategoriesVm { CategoryID = x.CategoryID, CategoryName = x.CategoryName, Description = x.Description })
-                .ToListAsync();
-        }
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<IEnumerable<CategoriesVm>>> GetCategories()
+        //{
+        //    return await _context.Categories
+        //        .Select(x => new CategoriesVm { CategoryID = x.CategoryID, CategoryName = x.CategoryName, Description = x.Description })
+        //        .ToListAsync();
+        //}
 
-        [HttpGet("{id}")]
-        [AllowAnonymous]
-        public async Task<ActionResult<CategoriesVm>> GetCategories(int id)
-        {
-            var Categories = await _context.Categories.FindAsync(id);
+        //[HttpGet("{id}")]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<CategoriesVm>> GetCategories(int id)
+        //{
+        //    var Categories = await _context.Categories.FindAsync(id);
 
-            if (Categories == null)
-            {
-                return NotFound();
-            }
+        //    if (Categories == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var CategoriesVm = new CategoriesVm
-            {
-                CategoryID = Categories.CategoryID,
-                CategoryName = Categories.CategoryName,
-                Description = Categories.Description
-            };
+        //    var CategoriesVm = new CategoriesVm
+        //    {
+        //        CategoryID = Categories.CategoryID,
+        //        CategoryName = Categories.CategoryName,
+        //        Description = Categories.Description
+        //    };
 
-            return CategoriesVm;
-        }
+        //    return CategoriesVm;
+        //}
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> PutCategories(int id, CategoriesFormVm CategoriesFormVm)
-        {
-            var Categories = await _context.Categories.FindAsync(id);
-
-            if (Categories == null)
-            {
-                return NotFound();
-            }
-
-            Categories.CategoryName = CategoriesFormVm.CategoryName;
-            Categories.Description = CategoriesFormVm.Description;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        [HttpPost]
+        //[HttpPut("{id}")]
         //[Authorize(Roles = "admin")]
-        public async Task<ActionResult<CategoriesVm>> PostCategories(CategoriesFormVm CategoriesFormVm)
-        {
-            var Categories = new Categories
-            {
-                CategoryName = CategoriesFormVm.CategoryName,
-                Description = CategoriesFormVm.Description
-            };
+        //public async Task<IActionResult> PutCategories(int id, CategoriesFormVm CategoriesFormVm)
+        //{
+        //    var Categories = await _context.Categories.FindAsync(id);
 
-            _context.Categories.Add(Categories);
-            await _context.SaveChangesAsync();
+        //    if (Categories == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return CreatedAtAction("GetCategories", new { id = Categories.CategoryID }, new CategoriesVm { CategoryID = Categories.CategoryID, CategoryName = Categories.CategoryName, Description = Categories.Description });
-        }
+        //    Categories.CategoryName = CategoriesFormVm.CategoryName;
+        //    Categories.Description = CategoriesFormVm.Description;
+        //    await _context.SaveChangesAsync();
 
-        [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteCategories(int id)
-        {
-            //var Categories = await _context.Categories.FindAsync(id);
-            var Categories = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
+        //    return NoContent();
+        //}
+
+        //[HttpPost]
+        ////[Authorize(Roles = "admin")]
+        //public async Task<ActionResult<CategoriesVm>> PostCategories(CategoriesFormVm CategoriesFormVm)
+        //{
+        //    var Categories = new Categories
+        //    {
+        //        CategoryName = CategoriesFormVm.CategoryName,
+        //        Description = CategoriesFormVm.Description
+        //    };
+
+        //    _context.Categories.Add(Categories);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetCategories", new { id = Categories.CategoryID }, new CategoriesVm { CategoryID = Categories.CategoryID, CategoryName = Categories.CategoryName, Description = Categories.Description });
+        //}
+
+        //[HttpDelete("{id}")]
+        ////[Authorize(Roles = "admin")]
+        //public async Task<IActionResult> DeleteCategories(int id)
+        //{
+        //    //var Categories = await _context.Categories.FindAsync(id);
+        //    var Categories = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
            
-            if (Categories == null)
-            {
-                return NotFound();
-            }
+        //    if (Categories == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Categories.Remove(Categories);
-            await _context.SaveChangesAsync();
+        //    _context.Categories.Remove(Categories);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }

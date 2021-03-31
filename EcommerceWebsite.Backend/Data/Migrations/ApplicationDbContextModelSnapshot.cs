@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EcommerceWebsite.Backend.Data.Migrations
+namespace EcommerceWebsite.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -47,7 +47,15 @@ namespace EcommerceWebsite.Backend.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("OrderID");
+
+                    b.HasIndex("UsersId");
 
                     b.ToTable("Orders");
                 });
@@ -84,9 +92,6 @@ namespace EcommerceWebsite.Backend.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoriesCategoryID")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
@@ -110,7 +115,7 @@ namespace EcommerceWebsite.Backend.Data.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.HasIndex("CategoriesCategoryID");
+                    b.HasIndex("CategoryID");
 
                     b.ToTable("Products");
                 });
@@ -318,6 +323,15 @@ namespace EcommerceWebsite.Backend.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("EcommerceWebsite.Backend.Models.Order", b =>
+                {
+                    b.HasOne("EcommerceWebsite.Backend.Models.User", "Users")
+                        .WithMany("Orders")
+                        .HasForeignKey("UsersId");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.OrderDetail", b =>
                 {
                     b.HasOne("EcommerceWebsite.Backend.Models.Order", "Order")
@@ -327,7 +341,7 @@ namespace EcommerceWebsite.Backend.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("EcommerceWebsite.Backend.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -341,7 +355,9 @@ namespace EcommerceWebsite.Backend.Data.Migrations
                 {
                     b.HasOne("EcommerceWebsite.Backend.Models.Categories", "Categories")
                         .WithMany("Products")
-                        .HasForeignKey("CategoriesCategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categories");
                 });
@@ -405,6 +421,16 @@ namespace EcommerceWebsite.Backend.Data.Migrations
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("EcommerceWebsite.Backend.Models.Product", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("EcommerceWebsite.Backend.Models.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,7 +16,7 @@ namespace EcommerceWebsite.Backend.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
-        private readonly IIdentityServerInteractionService _interaction;
+        private readonly IIdentityServerInteractionService _interaction; //*Add
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
 
@@ -28,17 +28,16 @@ namespace EcommerceWebsite.Backend.Areas.Identity.Pages.Account
         }
 
 
-        [BindProperty]
+        [BindProperty] //*Add
         public InputModel Input { get; set; }
 
-        public class InputModel
+        public class InputModel //*Add
         {
             [Required]
             public string LogoutId { get; set; }           
         }
 
-
-        public void OnGet(string logoutid)
+        public void OnGet(string logoutid) //*Modified
         {
             Input = new InputModel { LogoutId = logoutid };
         }

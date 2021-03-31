@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,7 +22,9 @@ namespace EcommerceWebsite.Backend.Models
 
         public DateTime UpdatedDate { get; set; }
 
-        [ForeignKey("CategoriesFK")]
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+        [ForeignKey("Categories")]
         public int CategoryID { get; set; }
         public virtual Categories Categories { get; set; }
     }

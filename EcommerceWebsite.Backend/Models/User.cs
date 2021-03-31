@@ -18,5 +18,7 @@ namespace EcommerceWebsite.Backend.Models
 
         [PersonalData]
         public string FullName { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
