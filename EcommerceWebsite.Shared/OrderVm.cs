@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace EcommerceWebsite.Shared
 {
-    class OrderVm
+    public class OrderVm
     {
+        public int OrderID { get; set; }
+
+        public DateTime OrderDate { get; set; }
     }
 }

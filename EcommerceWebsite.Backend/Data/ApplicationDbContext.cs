@@ -36,7 +36,5 @@ namespace EcommerceWebsite.Backend.Data
             modelBuilder.Entity<User>()
                 .ToTable("AspNetUsers");
         }
-
-
     }
 }
