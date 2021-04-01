@@ -4,14 +4,16 @@ using EcommerceWebsite.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebsite.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210401103817_UpdateDatabase")]
+    partial class UpdateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +125,6 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ProductID1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
@@ -136,8 +135,6 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.HasKey("ProductID");
 
                     b.HasIndex("CategoryID");
-
-                    b.HasIndex("ProductID1");
 
                     b.ToTable("Products");
                 });
@@ -151,9 +148,6 @@ namespace EcommerceWebsite.Backend.Migrations
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
 
                     b.Property<string>("RatingPoint")
                         .HasColumnType("nvarchar(max)");
@@ -171,8 +165,6 @@ namespace EcommerceWebsite.Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("RatingId");
-
-                    b.HasIndex("ProductID");
 
                     b.HasIndex("UsersId");
 
@@ -429,26 +421,14 @@ namespace EcommerceWebsite.Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EcommerceWebsite.Backend.Models.Product", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ProductID1");
-
                     b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Rating", b =>
                 {
-                    b.HasOne("EcommerceWebsite.Backend.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EcommerceWebsite.Backend.Models.User", "Users")
                         .WithMany("Ratings")
                         .HasForeignKey("UsersId");
-
-                    b.Navigation("Product");
 
                     b.Navigation("Users");
                 });
@@ -519,8 +499,6 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.Navigation("ImageFiles");
 
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.User", b =>

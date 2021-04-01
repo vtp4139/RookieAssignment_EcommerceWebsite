@@ -4,14 +4,16 @@ using EcommerceWebsite.Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EcommerceWebsite.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210401094614_AddValidation")]
+    partial class AddValidation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,38 +30,15 @@ namespace EcommerceWebsite.Backend.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryID");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("EcommerceWebsite.Backend.Models.ImageFile", b =>
-                {
-                    b.Property<int>("ImageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UploadedTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ImageId");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("ImageFile");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Order", b =>
@@ -120,15 +99,15 @@ namespace EcommerceWebsite.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Images")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ProductID1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -137,46 +116,7 @@ namespace EcommerceWebsite.Backend.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.HasIndex("ProductID1");
-
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("EcommerceWebsite.Backend.Models.Rating", b =>
-                {
-                    b.Property<int>("RatingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RatingPoint")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("UploadedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("RatingId");
-
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.User", b =>
@@ -382,17 +322,6 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EcommerceWebsite.Backend.Models.ImageFile", b =>
-                {
-                    b.HasOne("EcommerceWebsite.Backend.Models.Product", "Product")
-                        .WithMany("ImageFiles")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Order", b =>
                 {
                     b.HasOne("EcommerceWebsite.Backend.Models.User", "Users")
@@ -429,28 +358,7 @@ namespace EcommerceWebsite.Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EcommerceWebsite.Backend.Models.Product", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ProductID1");
-
                     b.Navigation("Categories");
-                });
-
-            modelBuilder.Entity("EcommerceWebsite.Backend.Models.Rating", b =>
-                {
-                    b.HasOne("EcommerceWebsite.Backend.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWebsite.Backend.Models.User", "Users")
-                        .WithMany("Ratings")
-                        .HasForeignKey("UsersId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -516,18 +424,12 @@ namespace EcommerceWebsite.Backend.Migrations
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Product", b =>
                 {
-                    b.Navigation("ImageFiles");
-
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.User", b =>
                 {
                     b.Navigation("Orders");
-
-                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

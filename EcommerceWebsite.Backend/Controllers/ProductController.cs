@@ -34,7 +34,6 @@ namespace EcommerceWebsite.Backend.Controllers
                     ProductName = x.ProductName, 
                     Description = x.Description, 
                     Price = x.Price, 
-                    Images = x.Images, 
                     CreatedDate = x.CreatedDate, 
                     UpdatedDate = x.UpdatedDate 
                 })
@@ -57,8 +56,6 @@ namespace EcommerceWebsite.Backend.Controllers
                 ProductID = Products.ProductID,
                 ProductName = Products.ProductName,
                 Description = Products.Description,
-                Price = Products.Price,
-                Images = Products.Images,
                 CreatedDate = Products.CreatedDate,
                 UpdatedDate = Products.UpdatedDate
             };
@@ -80,7 +77,6 @@ namespace EcommerceWebsite.Backend.Controllers
             Products.ProductName = ProductsFormVm.ProductName;
             Products.Description = ProductsFormVm.Description;
             Products.Price = ProductsFormVm.Price;
-            Products.Images = ProductsFormVm.Images;
             Products.CreatedDate = ProductsFormVm.CreatedDate;
             Products.UpdatedDate = ProductsFormVm.UpdatedDate;
 
@@ -98,7 +94,6 @@ namespace EcommerceWebsite.Backend.Controllers
                 ProductName = ProductsFormVm.ProductName,
                 Description = ProductsFormVm.Description,
                 Price = ProductsFormVm.Price,
-                Images = ProductsFormVm.Images,
                 CreatedDate = ProductsFormVm.CreatedDate,
                 UpdatedDate = ProductsFormVm.UpdatedDate,
                 CategoryID = ProductsFormVm.CategoryID
@@ -107,7 +102,7 @@ namespace EcommerceWebsite.Backend.Controllers
             _context.Products.Add(Products);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProducts", new { id = Products.ProductID }, new ProductVm { ProductName = Products.ProductName, Description = Products.Description, Price = Products.Price, Images = Products.Images, CreatedDate = Products.CreatedDate, UpdatedDate = Products.UpdatedDate });
+            return CreatedAtAction("GetProducts", new { id = Products.ProductID }, new ProductVm { ProductName = Products.ProductName, Description = Products.Description, Price = Products.Price, CreatedDate = Products.CreatedDate, UpdatedDate = Products.UpdatedDate });
         }
 
         [HttpDelete("{id}")]

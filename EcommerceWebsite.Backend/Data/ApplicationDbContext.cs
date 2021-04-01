@@ -10,6 +10,8 @@ namespace EcommerceWebsite.Backend.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<ImageFile> ImageFiles { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
