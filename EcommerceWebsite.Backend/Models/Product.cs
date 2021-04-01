@@ -10,10 +10,14 @@ namespace EcommerceWebsite.Backend.Models
         [Key]
         public int ProductID { get; set; }
 
+        [Required]
         public string ProductName { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
+        [Range(0, 999.99)]
         public decimal Price { get; set; }
 
         public string Images { get; set; }

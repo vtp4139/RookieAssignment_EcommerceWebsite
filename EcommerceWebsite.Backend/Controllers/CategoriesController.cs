@@ -90,7 +90,6 @@ namespace EcommerceWebsite.Backend.Controllers
         //[Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteCategories(int id)
         {
-            //var Categories = await _context.Categories.FindAsync(id);
             var Categories = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
 
             if (Categories == null)

@@ -9,11 +9,14 @@ namespace EcommerceWebsite.Shared
 {
     public class ProductFormVm
     {
-        [Required]
+        [Required(ErrorMessage = "Enter product name!")]
         public string ProductName { get; set; }
 
+        [Required(ErrorMessage = "Enter description!")]
         public string Description { get; set; }
 
+        [Required]
+        [Range(0, 999.99, ErrorMessage = "The value must belong (0, 999.99) !")]
         public decimal Price { get; set; }
 
         public string Images { get; set; }
@@ -22,7 +25,7 @@ namespace EcommerceWebsite.Shared
 
         public DateTime UpdatedDate { get; set; }
 
+        [Required(ErrorMessage = "Error: CategoryID is empty")]
         public int CategoryID { get; set; }
-
     }
 }

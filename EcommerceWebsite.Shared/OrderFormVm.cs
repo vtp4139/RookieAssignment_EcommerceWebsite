@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceWebsite.Shared
 {
-    class OrderFormVm
+    public class OrderFormVm
     {
         [Required]
         public int OrderID { get; set; }
