@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EcommerceWebsite.Backend.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -168,7 +168,7 @@ namespace EcommerceWebsite.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     OrderID = table.Column<int>(type: "int", nullable: false)
@@ -179,9 +179,9 @@ namespace EcommerceWebsite.Backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.OrderID);
+                    table.PrimaryKey("PK_Orders", x => x.OrderID);
                     table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_UsersId",
+                        name: "FK_Orders_AspNetUsers_UsersId",
                         column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -189,7 +189,7 @@ namespace EcommerceWebsite.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     ProductID = table.Column<int>(type: "int", nullable: false)
@@ -200,43 +200,40 @@ namespace EcommerceWebsite.Backend.Migrations
                     Images = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false),
-                    CategoriesCategoryID = table.Column<int>(type: "int", nullable: true)
+                    CategoryID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.ProductID);
+                    table.PrimaryKey("PK_Products", x => x.ProductID);
                     table.ForeignKey(
-                        name: "FK_Product_Categories_CategoriesCategoryID",
-                        column: x => x.CategoriesCategoryID,
+                        name: "FK_Products_Categories_CategoryID",
+                        column: x => x.CategoryID,
                         principalTable: "Categories",
                         principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetail",
+                name: "OrderDetails",
                 columns: table => new
                 {
-                    OrderDetailId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     OrderID = table.Column<int>(type: "int", nullable: false),
                     ProductID = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetail", x => x.OrderDetailId);
+                    table.PrimaryKey("PK_OrderDetails", x => new { x.ProductID, x.OrderID });
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Order_OrderID",
+                        name: "FK_OrderDetails_Orders_OrderID",
                         column: x => x.OrderID,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "OrderID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderDetail_Product_ProductID",
+                        name: "FK_OrderDetails_Products_ProductID",
                         column: x => x.ProductID,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "ProductID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -281,24 +278,19 @@ namespace EcommerceWebsite.Backend.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UsersId",
-                table: "Order",
-                column: "UsersId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_OrderID",
-                table: "OrderDetail",
+                name: "IX_OrderDetails_OrderID",
+                table: "OrderDetails",
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetail_ProductID",
-                table: "OrderDetail",
-                column: "ProductID");
+                name: "IX_Orders_UsersId",
+                table: "Orders",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoriesCategoryID",
-                table: "Product",
-                column: "CategoriesCategoryID");
+                name: "IX_Products_CategoryID",
+                table: "Products",
+                column: "CategoryID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -319,16 +311,16 @@ namespace EcommerceWebsite.Backend.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OrderDetail");
+                name: "OrderDetails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

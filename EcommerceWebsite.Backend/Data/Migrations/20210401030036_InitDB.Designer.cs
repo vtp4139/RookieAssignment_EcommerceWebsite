@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebsite.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210331071358_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210401030036_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,32 +59,25 @@ namespace EcommerceWebsite.Backend.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductID")
+                    b.Property<int>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderDetailId");
+                    b.HasKey("ProductID", "OrderID");
 
                     b.HasIndex("OrderID");
 
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Product", b =>
@@ -93,9 +86,6 @@ namespace EcommerceWebsite.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CategoriesCategoryID")
-                        .HasColumnType("int");
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
@@ -120,9 +110,9 @@ namespace EcommerceWebsite.Backend.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.HasIndex("CategoriesCategoryID");
+                    b.HasIndex("CategoryID");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.User", b =>
@@ -360,7 +350,9 @@ namespace EcommerceWebsite.Backend.Migrations
                 {
                     b.HasOne("EcommerceWebsite.Backend.Models.Categories", "Categories")
                         .WithMany("Products")
-                        .HasForeignKey("CategoriesCategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categories");
                 });

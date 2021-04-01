@@ -62,25 +62,18 @@ namespace EcommerceWebsite.Backend.Migrations
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("OrderID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductID")
+                    b.Property<int>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderDetailId");
+                    b.HasKey("ProductID", "OrderID");
 
                     b.HasIndex("OrderID");
-
-                    b.HasIndex("ProductID");
 
                     b.ToTable("OrderDetails");
                 });
