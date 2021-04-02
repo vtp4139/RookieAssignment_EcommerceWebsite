@@ -1,3 +1,5 @@
+using EcommerceWebsite.CustomerSite.Services.APIs;
+using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,6 +55,8 @@ namespace EcommerceWebsite.CustomerSite
                      };
                  });
 
+            services.AddHttpClient();
+            services.AddTransient<IProductClient, ProductApiClient>();
             services.AddControllersWithViews();
         }
 

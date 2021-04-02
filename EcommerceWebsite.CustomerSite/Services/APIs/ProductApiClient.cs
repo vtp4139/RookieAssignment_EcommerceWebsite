@@ -21,7 +21,7 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
         public async Task<ProductVm> GetProduct(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:44360/products/" + id);
+            var response = await client.GetAsync("https://localhost:44387/api/product/" + id);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<ProductVm>();
         }
@@ -29,23 +29,9 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
         public async Task<IList<ProductVm>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:44360/products");
+            var response = await client.GetAsync("https://localhost:44387/api/product");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IList<ProductVm>>();
         }
-
-        //public Task<ProductVm> PostProduct()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task<ProductVm> PutProduct()
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public Task<ProductVm> DeleteProduct()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

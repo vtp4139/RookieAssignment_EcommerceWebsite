@@ -10,8 +10,5 @@ namespace EcommerceWebsite.CustomerSite.Services.Interfaces
     {
         Task<IList<ProductVm>> GetProducts();
         Task<ProductVm> GetProduct(int id);
-        //Task<ProductVm> PostProduct();
-        //Task<ProductVm> PutProduct();
-        //Task<ProductVm> DeleteProduct();
     }
 }

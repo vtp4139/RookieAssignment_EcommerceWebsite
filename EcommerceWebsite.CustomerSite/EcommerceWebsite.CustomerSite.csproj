@@ -8,14 +8,11 @@
     <PackageReference Include="IdentityModel" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.9.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EcommerceWebsite.Shared\EcommerceWebsite.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewComponents\" />
   </ItemGroup>
 
 </Project>
