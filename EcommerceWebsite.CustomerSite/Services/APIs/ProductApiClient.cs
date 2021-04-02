@@ -5,23 +5,26 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace EcommerceWebsite.CustomerSite.Services.APIs
 {
     public class ProductApiClient : IProductClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
 
-        public ProductApiClient(IHttpClientFactory httpClientFactory)
+        public ProductApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
 
         public async Task<ProductVm> GetProduct(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:44387/api/product/" + id);
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/product/" + id);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<ProductVm>();
         }
@@ -29,7 +32,7 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
         public async Task<IList<ProductVm>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:44387/api/product");
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/product");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IList<ProductVm>>();
         }

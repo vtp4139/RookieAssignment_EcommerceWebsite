@@ -10,15 +10,11 @@ namespace EcommerceWebsite.Backend.Models
         [Key]
         public int ProductID { get; set; }
 
-        [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string ProductName { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
-        [Required]
-        [Range(0, 999.99)]
         public decimal Price { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -29,7 +25,7 @@ namespace EcommerceWebsite.Backend.Models
 
         public virtual ICollection<ImageFile> ImageFiles { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
 
         [ForeignKey("Categories")]
         public int CategoryID { get; set; }
