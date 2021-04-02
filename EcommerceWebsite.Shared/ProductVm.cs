@@ -16,13 +16,11 @@ namespace EcommerceWebsite.Shared
 
         public decimal Price { get; set; }
 
-        public string Images { get; set; }
-
         public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
 
-        public ICollection<int> OrderDetailIds { get; set; }
+        public List<string> ImageLocation { get; set; }
 
     }
 }

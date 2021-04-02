@@ -19,6 +19,15 @@ namespace EcommerceWebsite.CustomerSite.Controllers
         {
             var products = await _productApiClient.GetProducts();
 
+            foreach(var x in products)
+            {
+                foreach (var y in x.ImageLocation)
+                {
+                    
+                }
+
+            }
+
             return View(products);
         }
     }

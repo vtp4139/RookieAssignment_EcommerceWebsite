@@ -27,17 +27,39 @@ namespace EcommerceWebsite.Backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductVm>>> GetProducts()
         {
-            return await _context.Products
-                .Select(x => new ProductVm 
-                { 
-                    ProductID = x.ProductID, 
-                    ProductName = x.ProductName, 
-                    Description = x.Description, 
-                    Price = x.Price, 
-                    CreatedDate = x.CreatedDate, 
-                    UpdatedDate = x.UpdatedDate 
-                })
-                .ToListAsync();
+            var productList = await _context.Products.Include(p => p.ImageFiles).ToListAsync();
+
+            List<ProductVm> productVmList = new List<ProductVm>();
+        
+            foreach (var x in productList)
+            {
+                ProductVm get = new ProductVm();
+                get.ProductID = x.ProductID;
+                get.ProductName = x.ProductName;
+                get.Description = x.Description;
+                get.Price = x.Price;
+                get.CreatedDate = x.CreatedDate;
+                get.UpdatedDate = x.UpdatedDate;
+                get.ImageLocation = new List<string>();
+
+                for (int i = 0; i < x.ImageFiles.Count; i++)
+                {
+                    get.ImageLocation.Add(x.ImageFiles.ElementAt(i).ImageName);
+                }
+                productVmList.Add(get);
+            }
+            return productVmList;
+            //return await _context.Products
+            //    .Select(x => new ProductVm
+            //    {
+            //        ProductID = x.ProductID,
+            //        ProductName = x.ProductName,
+            //        Description = x.Description,
+            //        Price = x.Price,
+            //        CreatedDate = x.CreatedDate,
+            //        UpdatedDate = x.UpdatedDate,
+            //    })
+            //    .ToListAsync();
         }
 
         [HttpGet("{id}")]
