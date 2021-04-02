@@ -10,4 +10,12 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EcommerceWebsite.Shared\EcommerceWebsite.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewComponents\" />
+  </ItemGroup>
+
 </Project>

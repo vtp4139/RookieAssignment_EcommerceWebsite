@@ -42,7 +42,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<ProductVm>> GetProducts(int id)
+        public async Task<ActionResult<ProductVm>> GetProduct(int id)
         {
             var Products = await _context.Products.FindAsync(id);
 
@@ -87,7 +87,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpPost]
         //[Authorize(Roles = "admin")]
-        public async Task<ActionResult<ProductVm>> PostProducts(ProductFormVm ProductsFormVm)
+        public async Task<ActionResult<ProductVm>> PostProduct(ProductFormVm ProductsFormVm)
         {
             var Products = new Product
             {
@@ -107,7 +107,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpDelete("{id}")]
         //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> DeleteProducts(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
             var Products = await _context.Products.FirstOrDefaultAsync(x => x.ProductID == id);
 
