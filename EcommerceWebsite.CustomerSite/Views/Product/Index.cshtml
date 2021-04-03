@@ -1,8 +1,19 @@
 ﻿@model IList<EcommerceWebsite.Shared.ProductVm>
 
-<ul>
+<div class="row">
     @foreach (var product in Model)
     {
-      <li>@product.ProductName</li>
-    }
-</ul>
+                <div class="col-4">
+                    
+                        <div class="card" style="width: 20rem;">
+                            <img class="card-img-top" src="@product.ImageLocation[0]" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">@product.ProductName</h5>
+                                <p class="card-text"></p>
+                                <a href="#" class="btn btn-primary">Detail</a>
+                            </div>
+                        </div>
+
+                </div>
+     }
+</div>

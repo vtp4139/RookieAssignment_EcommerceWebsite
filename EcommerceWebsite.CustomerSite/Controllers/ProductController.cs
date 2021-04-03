@@ -1,5 +1,6 @@
 ﻿using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace EcommerceWebsite.CustomerSite.Controllers
     public class ProductController : Controller
     {
         private readonly IProductClient _productApiClient;
+        private readonly IConfiguration _configuration;
 
-        public ProductController(IProductClient productApiClient)
+        public ProductController(IProductClient productApiClient, IConfiguration configuration)
         {
             _productApiClient = productApiClient;
+            _configuration = configuration;
         }
         public async Task<IActionResult> IndexAsync()
         {
@@ -21,13 +24,13 @@ namespace EcommerceWebsite.CustomerSite.Controllers
 
             foreach(var x in products)
             {
-                foreach (var y in x.ImageLocation)
+                for(int i = 0; i < x.ImageLocation.Count; i++)
                 {
-                    
+                    string setUrl = _configuration["BackendUrl:Default"] + x.ImageLocation[i];
+                    x.ImageLocation[i] = setUrl;
                 }
 
             }
-
             return View(products);
         }
     }
