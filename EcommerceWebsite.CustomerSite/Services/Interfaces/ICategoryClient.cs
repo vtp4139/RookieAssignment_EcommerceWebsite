@@ -8,7 +8,7 @@ namespace EcommerceWebsite.CustomerSite.Services.Interfaces
 {
     public interface ICategoryClient
     {
-        Task<IList<CategoriesVm>> GetProducts();
-        Task<CategoriesVm> GetProduct(int id);
+        Task<IList<CategoriesVm>> GetCategories();
+        Task<CategoriesVm> GetCategory(int id);
     }
 }

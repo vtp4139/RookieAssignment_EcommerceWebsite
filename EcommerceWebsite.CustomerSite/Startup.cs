@@ -57,6 +57,7 @@ namespace EcommerceWebsite.CustomerSite
 
             services.AddHttpClient();
             services.AddTransient<IProductClient, ProductApiClient>();
+            services.AddTransient<ICategoryClient, CategoryApiClient>();
             services.AddControllersWithViews();
         }
 

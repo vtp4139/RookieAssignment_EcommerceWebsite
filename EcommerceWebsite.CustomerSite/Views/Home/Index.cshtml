@@ -4,21 +4,21 @@
 
 @model IList<EcommerceWebsite.Shared.ProductVm>
 
+@await Component.InvokeAsync("Category")
 <div class="row">
     @foreach (var product in Model)
     {
-<div class="col-4">
-
-    <div class="card mb-4 text-center" style="width: 20rem;">
-        <img class="card-img-top" src="@product.ImageLocation[0]" alt="Card image cap" height=200>
-        <div class="card-body">
-            <h5 class="card-title">@product.ProductName</h5>
-            <p class="card-text" style="color:red">@product.Price</p>
-            <a href="#" class="btn btn-primary">Detail</a>
+        <div class="col-4">
+            <div class="card mb-4 text-center" style="width: 20rem;">
+                <img class="card-img-top" src="@product.ImageLocation[0]" alt="Card image cap" height=200>
+                <div class="card-body">
+                    <h5 class="card-title">@product.ProductName</h5>
+                    <p class="card-text" style="color:red">@product.Price</p>
+                    <a href="#" class="btn btn-primary">Detail</a>
+                </div>
+            </div>
         </div>
-    </div>
-
-</div>}
+    }
 </div>
 
 
