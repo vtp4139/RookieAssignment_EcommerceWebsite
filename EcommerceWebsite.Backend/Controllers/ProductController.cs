@@ -74,6 +74,37 @@ namespace EcommerceWebsite.Backend.Controllers
             return ProductVm;
         }
 
+        [HttpGet("GetByCategory/{idCate}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<ProductVm>>> GetProductByCategory(int idCate)
+        {
+            var productList = await _context.Products
+                .Include(p => p.ImageFiles)
+                .Where(p => p.CategoryID == idCate)
+                .ToListAsync();
+
+            List<ProductVm> productVmList = new List<ProductVm>();
+
+            foreach (var x in productList)
+            {
+                ProductVm get = new ProductVm();
+                get.ProductID = x.ProductID;
+                get.ProductName = x.ProductName;
+                get.Description = x.Description;
+                get.Price = x.Price;
+                get.CreatedDate = x.CreatedDate;
+                get.UpdatedDate = x.UpdatedDate;
+                get.ImageLocation = new List<string>();
+
+                for (int i = 0; i < x.ImageFiles.Count; i++)
+                {
+                    get.ImageLocation.Add(x.ImageFiles.ElementAt(i).ImageLocation);
+                }
+                productVmList.Add(get);
+            }
+            return productVmList;
+        }
+
         [HttpPut("{id}")]
         //[Authorize(Roles = "admin")]
         public async Task<IActionResult> PutProducts(int id, ProductFormVm ProductsFormVm)

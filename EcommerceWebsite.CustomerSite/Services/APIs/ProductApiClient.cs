@@ -36,5 +36,14 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IList<ProductVm>>();
         }
+
+        public async Task<IList<ProductVm>> GetProductByCategory(int idCate)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/product/GetByCategory/" + idCate);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IList<ProductVm>>();
+        }
+
     }
 }

@@ -208,7 +208,7 @@ namespace EcommerceWebsite.Backend.Data
                 new ImageFile
                 {
                     ImageId = 4,
-                    ImageLocation = "/images/logitech-g402",
+                    ImageLocation = "/images/logitech-g402.jpg",
                     UploadedTime = DateTime.Now,
                     ProductID = 4
                 },
