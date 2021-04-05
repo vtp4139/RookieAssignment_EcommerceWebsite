@@ -18,7 +18,7 @@
                         <p class="card-text" style="color:red">$@product.Price</p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        <a class="btn btn-primary" asp-controller="Product" asp-action="Detail" asp-route-id="@product.ProductID">Xem chi tiết</a>
                     </div>
                 </div>
             </div>

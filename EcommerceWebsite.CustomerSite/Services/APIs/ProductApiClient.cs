@@ -44,6 +44,5 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IList<ProductVm>>();
         }
-
     }
 }

@@ -29,6 +29,11 @@ namespace EcommerceWebsite.Backend.Controllers
         {
             var productList = await _context.Products.Include(p => p.ImageFiles).ToListAsync();
 
+            if (productList == null)
+            {
+                return NotFound();
+            }
+
             List<ProductVm> productVmList = new List<ProductVm>();
         
             foreach (var x in productList)
@@ -55,21 +60,28 @@ namespace EcommerceWebsite.Backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ProductVm>> GetProduct(int id)
         {
-            var Products = await _context.Products.FindAsync(id);
+            var Product = await _context.Products.Include(p => p.ImageFiles).FirstOrDefaultAsync(x => x.ProductID == id);
 
-            if (Products == null)
+            if (Product == null)
             {
                 return NotFound();
             }
 
             var ProductVm = new ProductVm
             {
-                ProductID = Products.ProductID,
-                ProductName = Products.ProductName,
-                Description = Products.Description,
-                CreatedDate = Products.CreatedDate,
-                UpdatedDate = Products.UpdatedDate
-            };
+                ProductID = Product.ProductID,
+                ProductName = Product.ProductName,
+                Price = Product.Price,
+                Description = Product.Description,
+                CreatedDate = Product.CreatedDate,
+                UpdatedDate = Product.UpdatedDate,
+                ImageLocation = new List<string>()
+        };
+
+            for (int i = 0; i < Product.ImageFiles.Count; i++)
+            {
+                ProductVm.ImageLocation.Add(Product.ImageFiles.ElementAt(i).ImageLocation);
+            }
 
             return ProductVm;
         }

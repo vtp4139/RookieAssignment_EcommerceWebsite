@@ -1,0 +1,17 @@
+﻿@model EcommerceWebsite.Shared.ProductVm
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <img src="@Model.ImageLocation[0]" alt="Card image cap" height=350 width="450">
+        </div>
+
+        <div class="col-sm-5">
+            <h4>@Model.ProductName</h4>
+            <hr style="width:100%;text-align:left;margin-left:0">
+            <p>@Model.Description</p>
+            <h5 style="color:red">Giá: @Model.Price</h5>
+            <button type="button" class="btn btn-danger">Đặt hàng</button>
+        </div>
+    </div>
+</div>
