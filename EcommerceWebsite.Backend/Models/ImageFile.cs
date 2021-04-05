@@ -13,8 +13,8 @@ namespace EcommerceWebsite.Backend.Models
         [Key]
         public int ImageId { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")]
-        public string ImageName { get; set; }
+        [Column(TypeName = "nvarchar(300)")]
+        public string ImageLocation { get; set; }
 
         [NotMapped]
         public IFormFile File { get; set; }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWebsite.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210402071512_FixProduct")]
-    partial class FixProduct
+    [Migration("20210405070437_InitDatabase")]
+    partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,26 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.HasKey("CategoryID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Chuột",
+                            Description = "Cung cấp các mặt hàng chuột chất lượng nhất đến từ các hãng uy tín hiện nay. Đảm bảo chính hãng và bảo hành 6 tháng."
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Bàn phím",
+                            Description = "Cung cấp các mặt hàng bàn phím chất lượng nhất đến từ các hãng uy tín hiện nay. Đảm bảo chính hãng và bảo hành 6 tháng."
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Màn hình",
+                            Description = "Cung cấp các mặt hàng màn hình chất lượng nhất đến từ các hãng uy tín hiện nay. Đảm bảo chính hãng và bảo hành 6 tháng."
+                        });
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.ImageFile", b =>
@@ -48,8 +68,8 @@ namespace EcommerceWebsite.Backend.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("ImageLocation")
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
@@ -62,6 +82,92 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("ImageFiles");
+
+                    b.HasData(
+                        new
+                        {
+                            ImageId = 1,
+                            ImageLocation = "/images/g102-g20315.png",
+                            ProductID = 1,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(4028)
+                        },
+                        new
+                        {
+                            ImageId = 2,
+                            ImageLocation = "/images/logitech-g502.jpg",
+                            ProductID = 2,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5536)
+                        },
+                        new
+                        {
+                            ImageId = 3,
+                            ImageLocation = "/images/logitech-g302_1.jpg",
+                            ProductID = 3,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5545)
+                        },
+                        new
+                        {
+                            ImageId = 4,
+                            ImageLocation = "/images/logitech-g402",
+                            ProductID = 4,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5548)
+                        },
+                        new
+                        {
+                            ImageId = 5,
+                            ImageLocation = "/images/Razer-PBT-Keycap-Upgrade-Set-Classic-Black.jpg",
+                            ProductID = 5,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5552)
+                        },
+                        new
+                        {
+                            ImageId = 6,
+                            ImageLocation = "/images/Razer-Level-Up-Bundle_cynosa_lite_viper_mini_gigantus_v2.jpg",
+                            ProductID = 6,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5555)
+                        },
+                        new
+                        {
+                            ImageId = 7,
+                            ImageLocation = "/images/Razer-Blackwidow-Lite-Mercury.jpg",
+                            ProductID = 7,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5558)
+                        },
+                        new
+                        {
+                            ImageId = 8,
+                            ImageLocation = "/images/Razer_Blackwidow_Lite_Mercury_White.jpg",
+                            ProductID = 8,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5560)
+                        },
+                        new
+                        {
+                            ImageId = 9,
+                            ImageLocation = "/images/lg_20mk400h_b_19_5inch_led_1_2.png",
+                            ProductID = 9,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5563)
+                        },
+                        new
+                        {
+                            ImageId = 10,
+                            ImageLocation = "/images/LG-22MN430-new.jpg",
+                            ProductID = 10,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5566)
+                        },
+                        new
+                        {
+                            ImageId = 11,
+                            ImageLocation = "/images/LG-24MK430H-B 24.jpg",
+                            ProductID = 11,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5568)
+                        },
+                        new
+                        {
+                            ImageId = 12,
+                            ImageLocation = "/images/LG-24MP59G-P 24-IPS.jpg",
+                            ProductID = 12,
+                            UploadedTime = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(5571)
+                        });
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Order", b =>
@@ -125,7 +231,7 @@ namespace EcommerceWebsite.Backend.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -135,6 +241,128 @@ namespace EcommerceWebsite.Backend.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductID = 1,
+                            CategoryID = 1,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 963, DateTimeKind.Local).AddTicks(3326),
+                            Description = "Khi lưu các cấu hình vào bộ nhớ trong bằng phần mềm HUB G của Chuột Logitech, bạn có thể sử dụng nó trên các máy tính khác mà không cần cài đặt phần mềm hoặc các cấu hình lại một lần nữa. Cắm vào là sử dụng theo ý thích của bạn.",
+                            Price = 400m,
+                            ProductName = "Chuột Logitech G102 Lightsync RGB Black",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 964, DateTimeKind.Local).AddTicks(8887)
+                        },
+                        new
+                        {
+                            ProductID = 2,
+                            CategoryID = 1,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(710),
+                            Description = "Ngoài hiệu suất cốt lõi và các tính năng cá nhân, nhiều chi tiết được thiết kế và chế tạo với sự tận tâm. Logitech G502 Hero là một trong những dòng chuột gaming giá rẻ so với các sản phẩm ở cùng phân khúc với dây bện với nút buộc dây có khóa nhám, phần cầm nắm bên có viền cao su, cửa từ vào khoang để khối nặng và nhiều hơn nữa.",
+                            Price = 400m,
+                            ProductName = "Chuột Logitech G502 Hero",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(720)
+                        },
+                        new
+                        {
+                            ProductID = 3,
+                            CategoryID = 1,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(724),
+                            Description = "Logitech G302 Daedalus Prime là một trong những sản phẩm tiêu biểu trong phong cách thiết kế đơn giản, tập trung vào tốc độ, sự chính xác và tính hiệu quả trong mỗi cú nhấn chuột của game thủ, đặc biệt với thể loại game MOBA.",
+                            Price = 590m,
+                            ProductName = "Chuột Logitech G302 Daedalus Prime",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(726)
+                        },
+                        new
+                        {
+                            ProductID = 4,
+                            CategoryID = 1,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(730),
+                            Description = "Chuột Logitech G402 sở hữu tốc độ quét lên tới 500 IPS, sử dụng công nghệ cảm biến mới nhất của Logitech là Fusion Engine cho độ chính xác cực cao khi sử dụng.",
+                            Price = 640m,
+                            ProductName = "Chuột Logitech G402 Hyperion",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(732)
+                        },
+                        new
+                        {
+                            ProductID = 5,
+                            CategoryID = 2,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(736),
+                            Description = "Đã đến lúc trở nên quyết đoán hơn trong từng cú bấm phím mang tới khả năng chiến thắng trong mọi trận đấu. Với bộ nâng cấp Keycap Razer PBT. Được thiết kế để sử dụng trong những trò chơi khốc liệt nhất, những chiếc keycaps PBT doubleshot này được thiết kế để giành chiến thắng trong mọi trận chiến.",
+                            Price = 890m,
+                            ProductName = "Razer PBT Keycap Upgrade Set",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(738)
+                        },
+                        new
+                        {
+                            ProductID = 6,
+                            CategoryID = 2,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(741),
+                            Description = "Sản phẩm đầu tiên trong combo sẽ là chiếc bàn phím giả cơ Razer Cynosa Lite. Sở hữu thiết kế đơn giản, tông màu đen huyền bí và khả năng tùy biến LED RGB Razer Chroma cho Cynosa Lite vẻ đẹp bắt mắt không thua kém những chiếc bàn phím cơ Razer khác. Các phím được lập trình sẵn những chức năng hữu ích macro cho bàn phím Cynosa Lite thuận tiện hơn trong việc sử dụng.",
+                            Price = 199m,
+                            ProductName = "Razer Level Up Bundle (Cynosa Lite + Viper Mini + Gigantus V2 Medium)",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(744)
+                        },
+                        new
+                        {
+                            ProductID = 7,
+                            CategoryID = 2,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(747),
+                            Description = "Razer™ Mechanical Switches with 50g actuation force",
+                            Price = 199m,
+                            ProductName = "Bàn phím Razer Blackwidow Lite",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(749)
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            CategoryID = 2,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(752),
+                            Description = "Razer™ Mechanical Switches with 50g actuation force",
+                            Price = 299m,
+                            ProductName = "Bàn phím Razer Blackwidow Lite Mercury",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(755)
+                        },
+                        new
+                        {
+                            ProductID = 9,
+                            CategoryID = 3,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(758),
+                            Description = "Giảm ánh sáng xanh nhằm giúp làm giảm sự mệt mỏi của mắt, Chế độ đọc sách mang đến điều kiện đọc sách tối ưu. Với điều khiển tay cầm dễ dàng, bạn có đọc thoải mái hơn màn hình của bạn.",
+                            Price = 1299m,
+                            ProductName = "Màn hình LG 20MK400H-B 19.5 - HD TN",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(760)
+                        },
+                        new
+                        {
+                            ProductID = 10,
+                            CategoryID = 3,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(763),
+                            Description = "LG 22MN430M-B là một mẫu màn hình hướng đến đối tượng là dân văn phòng, đáp ứng được những nhu cầu cơ bản, cho bạn một khung nhìn để làm việc, cũng như xem phim, chơi game với một mức giá bình dân nhất có thể. ",
+                            Price = 2800m,
+                            ProductName = "Màn hình LG 22MN430M-B 22 IPS 75Hz FreeSync",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(765)
+                        },
+                        new
+                        {
+                            ProductID = 11,
+                            CategoryID = 3,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(768),
+                            Description = "LG 24MK430H-B là một mẫu màn hình hướng đến đối tượng là dân văn phòng, đáp ứng được những nhu cầu cơ bản, cho bạn một khung nhìn để làm việc, cũng như xem phim, chơi game mới một mức giá bình dân nhất có thể.",
+                            Price = 3000m,
+                            ProductName = "Màn hình LG 24MK430H-B 24 IPS 75Hz OC FreeSyn",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(770)
+                        },
+                        new
+                        {
+                            ProductID = 12,
+                            CategoryID = 3,
+                            CreatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(773),
+                            Description = "Đa số game thủ bình dân đều muốn có cho mình một chiếc màn hình vừa phải có mức giá phải chăng dễ tiếp cận, vừa có những thông số kỹ thuật cân bằng để phục vụ không chỉ việc chơi game mà còn có thể xem phim và làm nhiều chuyện khác nữa. Hiểu được điều đó, LG đã cho ra mắt LG 24MP59G-P - một sự lựa chọn sáng giá trong phân khúc bình dân.",
+                            Price = 3200m,
+                            ProductName = "Màn hình LG 24MP59G-P 24 IPS 75Hz Freesync chuyên game",
+                            UpdatedDate = new DateTime(2021, 4, 5, 14, 4, 36, 965, DateTimeKind.Local).AddTicks(775)
+                        });
                 });
 
             modelBuilder.Entity("EcommerceWebsite.Backend.Models.Rating", b =>

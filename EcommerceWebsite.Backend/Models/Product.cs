@@ -10,7 +10,7 @@ namespace EcommerceWebsite.Backend.Models
         [Key]
         public int ProductID { get; set; }
 
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(300)")]
         public string ProductName { get; set; }
 
         public string Description { get; set; }

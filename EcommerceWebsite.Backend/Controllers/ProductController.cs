@@ -44,22 +44,11 @@ namespace EcommerceWebsite.Backend.Controllers
 
                 for (int i = 0; i < x.ImageFiles.Count; i++)
                 {
-                    get.ImageLocation.Add(x.ImageFiles.ElementAt(i).ImageName);
+                    get.ImageLocation.Add(x.ImageFiles.ElementAt(i).ImageLocation);
                 }
                 productVmList.Add(get);
             }
             return productVmList;
-            //return await _context.Products
-            //    .Select(x => new ProductVm
-            //    {
-            //        ProductID = x.ProductID,
-            //        ProductName = x.ProductName,
-            //        Description = x.Description,
-            //        Price = x.Price,
-            //        CreatedDate = x.CreatedDate,
-            //        UpdatedDate = x.UpdatedDate,
-            //    })
-            //    .ToListAsync();
         }
 
         [HttpGet("{id}")]
