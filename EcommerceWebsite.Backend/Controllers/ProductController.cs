@@ -35,7 +35,7 @@ namespace EcommerceWebsite.Backend.Controllers
             }
 
             List<ProductVm> productVmList = new List<ProductVm>();
-        
+
             foreach (var x in productList)
             {
                 ProductVm get = new ProductVm();
@@ -60,11 +60,20 @@ namespace EcommerceWebsite.Backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ProductVm>> GetProduct(int id)
         {
-            var Product = await _context.Products.Include(p => p.ImageFiles).FirstOrDefaultAsync(x => x.ProductID == id);
+            var Product = await _context.Products.Include(p => p.ImageFiles).Include(p => p.Ratings).FirstOrDefaultAsync(x => x.ProductID == id);
+            int _RatingCount = 0;
+            double _RatingPoint = 0;
 
             if (Product == null)
             {
                 return NotFound();
+            }
+
+            if(Product.Ratings != null)
+            {
+                _RatingCount = Product.Ratings.Count();
+                if(_RatingCount > 0)
+                    _RatingPoint = Product.Ratings.Average(r => r.RatingPoint);
             }
 
             var ProductVm = new ProductVm
@@ -75,8 +84,12 @@ namespace EcommerceWebsite.Backend.Controllers
                 Description = Product.Description,
                 CreatedDate = Product.CreatedDate,
                 UpdatedDate = Product.UpdatedDate,
+                //RatingCount = Product.Ratings.Count(),
+                //RatingPoint = Product.Ratings.Average(r => r.RatingPoint),
+                RatingCount = _RatingCount,
+                RatingPoint = _RatingPoint,
                 ImageLocation = new List<string>()
-        };
+            };
 
             for (int i = 0; i < Product.ImageFiles.Count; i++)
             {

@@ -12,13 +12,7 @@ namespace EcommerceWebsite.Backend.Models
         [Key]
         public int RatingId { get; set; }
 
-        [Column(TypeName = "nvarchar(100)")]
-        public string Title { get; set; }
-
-        public string RatingPoint { get; set; }
-
-        [Column(TypeName = "nvarchar(1000)")]
-        public string Content { get; set; }
+        public int RatingPoint { get; set; }
 
         public DateTime UploadedTime { get; set; }
 

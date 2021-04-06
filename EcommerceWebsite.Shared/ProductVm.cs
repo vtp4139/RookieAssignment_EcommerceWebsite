@@ -20,6 +20,10 @@ namespace EcommerceWebsite.Shared
 
         public DateTime UpdatedDate { get; set; }
 
+        public int RatingCount { get; set; }
+
+        public double RatingPoint { get; set; }
+
         public List<string> ImageLocation { get; set; }
 
     }
