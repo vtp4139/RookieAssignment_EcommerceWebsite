@@ -17,7 +17,7 @@ namespace EcommerceWebsite.Backend.Models
         public DateTime UploadedTime { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual User Users { get; set; }
 
         [ForeignKey("Product")]

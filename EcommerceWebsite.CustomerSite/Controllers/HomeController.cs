@@ -15,12 +15,12 @@ namespace EcommerceWebsite.CustomerSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductClient _productApiClient;
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration; //<-
 
         public HomeController(ILogger<HomeController> logger, IProductClient productApiClient, IConfiguration configuration)
         {
             _logger = logger;
-            _productApiClient = productApiClient;
+            _productApiClient = productApiClient; //<-
             _configuration = configuration;
         }
 
@@ -28,6 +28,7 @@ namespace EcommerceWebsite.CustomerSite.Controllers
         {
             var products = await _productApiClient.GetProducts();
 
+            //Set url backend for image
             foreach (var x in products)
             {
                 for (int i = 0; i < x.ImageLocation.Count; i++)
