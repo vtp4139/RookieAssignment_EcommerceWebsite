@@ -1,9 +1,27 @@
 ﻿@model EcommerceWebsite.Shared.ProductVm
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("~/js/setimage.js")"></script>
+}
+@section Styles {
+    <link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
+}
 
 <div class="container">
     <div class="row">
         <div class="col-sm-5">
-            <img src="@Model.ImageLocation[0]" alt="Card image cap" height=350 width="450">
+            <img id="ProductImage" src="@Model.ImageLocation[0]" alt="Card image cap" height=350 width="450">
+            <div class="container">
+                <div class="row">
+                    @for (int i = 0; i < Model.ImageLocation.Count; i++)
+                    {
+                    <div class="col-md-2">
+                        <img class="thumbnail" src="@Model.ImageLocation[i]" onclick="SetImage('@Model.ImageLocation[i]');" alt="Card image cap" height=75 width="75">
+                    </div>
+                    <span>&nbsp;&nbsp;</span>
+                    }
+                </div>
+            </div>
         </div>
 
         <div class="col-sm-5">

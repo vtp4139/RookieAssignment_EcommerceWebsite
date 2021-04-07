@@ -1,0 +1,10 @@
+﻿.thumbnail
+{
+    border: 1px solid #E2E2E2;
+    border-radius: 5px 5px;
+}
+
+.thumbnail:hover
+{
+    border: 1px solid #0094FF;
+}
