@@ -1,7 +1,7 @@
 ﻿@model EcommerceWebsite.Shared.ProductVm
 @section JavaScript
 {
-    <script type="text/javascript" src="@Url.Content("~/js/setimage.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/detail.js")"></script>
 }
 @section Styles {
     <link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
@@ -15,10 +15,10 @@
                 <div class="row">
                     @for (int i = 0; i < Model.ImageLocation.Count; i++)
                     {
-                    <div class="col-md-2">
-                        <img class="thumbnail" src="@Model.ImageLocation[i]" onclick="SetImage('@Model.ImageLocation[i]');" alt="Card image cap" height=75 width="75">
-                    </div>
-                    <span>&nbsp;&nbsp;</span>
+                        <div class="col-md-2">
+                            <img class="thumbnail" src="@Model.ImageLocation[i]" onmouseover="SetImage('@Model.ImageLocation[i]');" alt="Card image cap" height=75 width="75">
+                        </div>
+                        <span>&nbsp;&nbsp;</span>
                     }
                 </div>
             </div>
@@ -43,8 +43,21 @@
             }
             <hr style="width:100%;text-align:left;margin-left:0">
             <p>@Model.Description</p>
-            <h5 style="color:red">Giá: @Model.Price</h5>
-            <button type="button" class="btn btn-danger">Đặt hàng</button><br />
+            <h5 style="color:red">Giá: @Model.Price</h5><br />
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-light" onclick="Minus()" style="font-size:large">
+                        -
+                    </button>
+                </span>
+                <input type="text" id="quantity" name="quantity" style="width:50px" value="1" min="1" max="100">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-light" onclick="Plus()" style="font-size:large">
+                        +
+                    </button>
+                </span>
+            </div><br />
+            <button type="button" class="btn btn-danger" style="width:200px;">Đặt hàng</button><br />
         </div>
     </div>
 </div>
