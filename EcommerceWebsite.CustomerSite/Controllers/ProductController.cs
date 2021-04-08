@@ -1,4 +1,7 @@
-﻿using EcommerceWebsite.CustomerSite.Services.Interfaces;
+﻿using EcommerceWebsite.CustomerSite.Services;
+using EcommerceWebsite.CustomerSite.Services.Interfaces;
+using EcommerceWebsite.Shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -59,6 +62,37 @@ namespace EcommerceWebsite.CustomerSite.Controllers
             }
 
             return View(product);
+        }
+
+        [HttpPost, ActionName("Detail")]
+        public async Task<IActionResult> AddToCartAsync(int id, int quantity)
+        {
+            List<CartItemsVm> ListPro = HttpContext.Session.Get<List<CartItemsVm>>("SessionCart");
+
+            if (ListPro == null)
+            {
+                ListPro = new List<CartItemsVm>();
+            }
+
+            var product = await _productApiClient.GetProduct(id);
+            for (int i = 0; i < product.ImageLocation.Count; i++)
+            {
+                string setUrl = _configuration["BackendUrl:Default"] + product.ImageLocation[i];
+                product.ImageLocation[i] = setUrl;
+            }
+
+            CartItemsVm x = new CartItemsVm();
+            x.ProductID = product.ProductID;
+            x.ProductName = product.ProductName;
+            x.Price = product.Price;
+            x.Quantity = quantity;
+            x.ImageLocation = product.ImageLocation;
+
+            ListPro.Add(x);
+            HttpContext.Session.Set("SessionCart", ListPro);
+
+            string referer = Request.Headers["Referer"].ToString();
+            return Redirect(referer);
         }
     }
 }

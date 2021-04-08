@@ -7,7 +7,8 @@ var quantitiy = 0;
 function Plus() {
     //e.preventDefault();
     var quantity = parseInt($('#quantity').val());
-    $('#quantity').val(quantity + 1);
+    //document.getElementById("quantity").innerHTML = "" + quantity;
+    $('#quantity').val(quantity + 1); 
 }
 
 function Minus() {

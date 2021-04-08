@@ -5,6 +5,7 @@
 }
 @section Styles {
     <link href="@Url.Content("~/css/detail.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/fontawesome-free-5.15.2-web/css/all.css")" rel="stylesheet" type="text/css" />
 }
 
 <div class="container">
@@ -44,20 +45,22 @@
             <hr style="width:100%;text-align:left;margin-left:0">
             <p>@Model.Description</p>
             <h5 style="color:red">Giá: @Model.Price</h5><br />
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-light" onclick="Minus()" style="font-size:large">
-                        -
-                    </button>
-                </span>
-                <input type="text" id="quantity" name="quantity" style="width:50px" value="1" min="1" max="100">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-light" onclick="Plus()" style="font-size:large">
-                        +
-                    </button>
-                </span>
-            </div><br />
-            <button type="button" class="btn btn-danger" style="width:200px;">Đặt hàng</button><br />
+            <form method="post">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-light" onclick="Minus()" style="font-size:large">
+                            -
+                        </button>
+                    </span>
+                    <input type="number" id="quantity" name="quantity"  style="width:50px" value="1" min="1" max="100">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-light" onclick="Plus()" style="font-size:large">
+                            +
+                        </button>
+                    </span>
+                </div><br />
+                <button type="submit" class="btn btn-danger" asp-route-id="@Model.ProductID" style="width:200px;">Đặt hàng</button><br />
+            </form>
         </div>
     </div>
 </div>
