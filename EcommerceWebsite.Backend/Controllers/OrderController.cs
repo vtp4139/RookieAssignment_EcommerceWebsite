@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EcommerceWebsite.Backend.Controllers
@@ -77,17 +78,30 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpPost]
         //[Authorize(Roles = "admin")]
-        public async Task<ActionResult<OrderVm>> PostOrders(OrderFormVm OrdersFormVm)
+        public async Task<ActionResult<OrderVm>> PostOrders(List<CartItemsVm> ListItem)
         {
+            //Add order
             var Orders = new Order
             {
-                OrderDate = OrdersFormVm.OrderDate,
-                UserId = OrdersFormVm.UserId,
+                OrderDate = DateTime.Now,
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
             };
-
             _context.Orders.Add(Orders);
             await _context.SaveChangesAsync();
 
+            //Add order details
+            OrderDetail x = new OrderDetail();
+            foreach (CartItemsVm item in ListItem)
+            {
+                x.OrderID = Orders.OrderID;
+                x.ProductID = item.ProductID;
+                x.Quantity = item.Quantity;
+                x.UnitPrice = item.Price;
+
+                _context.OrderDetails.Add(x);
+                await _context.SaveChangesAsync();
+            }
+            await _context.Orders.FindAsync(Orders);
             return CreatedAtAction("GetOrders", new { id = Orders.OrderID }, new OrderVm { OrderDate = Orders.OrderDate});
         }
 

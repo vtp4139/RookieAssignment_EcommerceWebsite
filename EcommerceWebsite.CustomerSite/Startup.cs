@@ -61,6 +61,7 @@ namespace EcommerceWebsite.CustomerSite
             services.AddTransient<IProductClient, ProductApiClient>();
             services.AddTransient<ICategoryClient, CategoryApiClient>();
             services.AddTransient<IRatingClient, RatingApiClient>();
+            services.AddTransient<IOrderClient, OrderApiClient>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
 

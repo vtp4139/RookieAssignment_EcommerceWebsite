@@ -13,12 +13,10 @@ namespace EcommerceWebsite.CustomerSite.Controllers
     public class RatingController : Controller
     {
         private readonly IRatingClient _ratingApiClient;
-        private readonly IConfiguration _configuration;
 
-        public RatingController(IRatingClient ratingApiClient, IConfiguration configuration)
+        public RatingController(IRatingClient ratingApiClient)
         {
             _ratingApiClient = ratingApiClient;
-            _configuration = configuration;
         }
 
         [HttpPost]
