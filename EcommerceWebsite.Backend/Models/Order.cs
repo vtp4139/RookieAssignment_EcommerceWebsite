@@ -15,7 +15,7 @@ namespace EcommerceWebsite.Backend.Models
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual User Users { get; set; }
     }
 }

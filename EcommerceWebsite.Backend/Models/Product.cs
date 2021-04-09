@@ -17,6 +17,8 @@ namespace EcommerceWebsite.Backend.Models
 
         public decimal Price { get; set; }
 
+        public int UnitsInStock { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }

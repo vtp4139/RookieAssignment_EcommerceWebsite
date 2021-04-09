@@ -15,5 +15,25 @@ namespace EcommerceWebsite.CustomerSite.Controllers
             List<CartItemsVm> ListPro = HttpContext.Session.Get<List<CartItemsVm>>("SessionCart");
             return View(ListPro);
         }
+
+        public IActionResult Remove(int id)
+        {
+            List<CartItemsVm> ListPro = HttpContext.Session.Get<List<CartItemsVm>>("SessionCart");
+
+            CartItemsVm itemDel = new CartItemsVm();
+
+            foreach(CartItemsVm item in ListPro)
+            {
+                if (item.ProductID == id)
+                {
+                    itemDel = item;
+                    break;
+                }               
+            }
+
+            ListPro.Remove(itemDel);
+            HttpContext.Session.Set("SessionCart", ListPro);
+            return RedirectToAction("Index");
+        }
     }
 }
