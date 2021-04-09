@@ -67,6 +67,7 @@ namespace EcommerceWebsite.CustomerSite.Controllers
         [HttpPost, ActionName("Detail")]
         public async Task<IActionResult> AddToCartAsync(int id, int quantity)
         {
+            string referer = Request.Headers["Referer"].ToString();
             List<CartItemsVm> ListPro = HttpContext.Session.Get<List<CartItemsVm>>("SessionCart");
 
             if (ListPro == null)
@@ -74,6 +75,19 @@ namespace EcommerceWebsite.CustomerSite.Controllers
                 ListPro = new List<CartItemsVm>();
             }
 
+            //If the item is already in the shopping cart, add up the quantity
+            for (int i = 0; i < ListPro.Count; i++)
+            {
+                if (ListPro[i].ProductID == id)
+                {
+                    ListPro[i].Quantity += quantity;
+
+                    HttpContext.Session.Set("SessionCart", ListPro);
+                    return Redirect(referer);
+                }
+            }
+
+            //Add new item to cart
             var product = await _productApiClient.GetProduct(id);
             for (int i = 0; i < product.ImageLocation.Count; i++)
             {
@@ -91,7 +105,6 @@ namespace EcommerceWebsite.CustomerSite.Controllers
             ListPro.Add(x);
             HttpContext.Session.Set("SessionCart", ListPro);
 
-            string referer = Request.Headers["Referer"].ToString();
             return Redirect(referer);
         }
     }

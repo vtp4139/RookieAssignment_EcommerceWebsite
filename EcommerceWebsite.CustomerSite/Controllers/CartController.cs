@@ -21,6 +21,11 @@ namespace EcommerceWebsite.CustomerSite.Controllers
         public IActionResult Index()
         {
             List<CartItemsVm> ListPro = HttpContext.Session.Get<List<CartItemsVm>>("SessionCart");
+
+            if (ListPro == null)
+            {
+                ListPro = new List<CartItemsVm>();
+            }
             return View(ListPro);
         }
 
