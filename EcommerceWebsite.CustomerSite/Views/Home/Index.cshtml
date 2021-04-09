@@ -11,10 +11,10 @@
         @foreach (var product in Model)
         {
             <div class="col-3">
-                <div class="card mb-4 text-center" style="width: 16rem; height: 25rem">
+                <div class="card mb-4 text-center" style="width: 16rem; height: 25rem;">
                     <img class="card-img-top" src="@product.ImageLocation[0]" alt="Card image cap" height=200>
                     <div class="card-body">
-                        <h6 class="card-title">@product.ProductName</h6>
+                        <h6 class="card-title">@product.ProductName</h6>                      
                         <p class="card-text" style="color:red">$@product.Price</p>
                     </div>
                     <div class="card-footer">

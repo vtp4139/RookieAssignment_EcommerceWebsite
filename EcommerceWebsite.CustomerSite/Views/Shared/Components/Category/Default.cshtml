@@ -1,12 +1,13 @@
 ﻿@model IList<EcommerceWebsite.Shared.CategoriesVm>
 
-<!-- As a link -->
-<ul class="nav justify-content-center bg-light">
-    @foreach (var cate in Model)
-    {
-        <li class="nav-item">
-            <a class="nav-link active" style="font-size:20px" asp-controller="Product" asp-action="GetProductByCategory" asp-route-idCate="@cate.CategoryID">@cate.CategoryName</a>
-        </li>
-    }
-</ul>
-<br/>
+<div class="container">
+    <div class="row justify-content-md-center" style=" border: 1px solid #E2E2E2; border-radius: 5px 5px;">
+        @foreach (var cate in Model)
+        {
+            <div class="col col-lg-2">
+                <a class="nav-link active" style="font-size:25px; color:black; font-family: 'Courier New', monospace;" asp-controller="Product" asp-action="GetProductByCategory" asp-route-idCate="@cate.CategoryID">@cate.CategoryName</a>
+            </div>
+        }
+    </div>
+</div>
+<br />
