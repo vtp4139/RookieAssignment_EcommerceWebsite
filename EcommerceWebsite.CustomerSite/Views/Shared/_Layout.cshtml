@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using EcommerceWebsite.CustomerSite.Services;
+@using EcommerceWebsite.Shared;
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,9 +36,19 @@
                         </li>
                     </ul>
                 </div>
+
+                <!-- Cart Icon -->
                 <form class="d-flex">
-                    <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Cart<span id="quantitys" class="badge bg-secondary">0</span></button>
-                </form>               
+                    @if (HttpContextAccessor.HttpContext.Session.Get<List<CartItemsVm>>("SessionCart") != null)
+                    {
+                        var count = HttpContextAccessor.HttpContext.Session.Get<List<CartItemsVm>>("SessionCart").Count;
+                        <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Cart<span id="quantities" class="badge badge-pill badge-warning">@count</span></button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Cart<span id="quantities" class="badge badge-pill badge-warning">0</span></button>
+                    }
+                </form>
             </div>
         </nav>
     </header>
