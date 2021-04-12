@@ -26,7 +26,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<OrderVm>>> GetOrders()
+        public async Task<ActionResult<IList<OrderVm>>> GetOrders()
         {
             return await _context.Orders
                 .Select(x => new OrderVm
@@ -39,7 +39,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<OrderVm>> GetOrders(int id)
+        public async Task<ActionResult<OrderVm>> GetOrder(int id)
         {
             var Orders = await _context.Orders.FindAsync(id);
 

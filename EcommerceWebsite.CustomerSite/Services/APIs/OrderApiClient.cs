@@ -34,9 +34,12 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
             throw new NotImplementedException();
         }
 
-        public Task<IList<OrderVm>> GetOrders()
+        public async Task<IList<OrderVm>> GetOrders()
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/Order");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IList<OrderVm>>();
         }
 
         public async Task<OrderVm> PostOrders(List<CartItemsVm> ListItem)
