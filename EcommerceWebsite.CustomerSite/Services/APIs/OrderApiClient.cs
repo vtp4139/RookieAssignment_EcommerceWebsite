@@ -61,5 +61,20 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<OrderVm>();
         }
+
+        public async Task<bool> DeleteOrders(int id)
+        {
+            //Send access token 
+            var client = _httpClientFactory.CreateClient();
+            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+            client.SetBearerToken(accessToken);
+
+            //Send json with body
+            var response = await client.DeleteAsync(_configuration["BackendUrl:Default"] + "/api/Order/" + id);
+
+            response.EnsureSuccessStatusCode();
+            return true;
+        }
+
     }
 }

@@ -42,5 +42,12 @@ namespace EcommerceWebsite.CustomerSite.Controllers
             }
             return View(ListItem);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var ListItem = await _orderApiClient.DeleteOrders(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }

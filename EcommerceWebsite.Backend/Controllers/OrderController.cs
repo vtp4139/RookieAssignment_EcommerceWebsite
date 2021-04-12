@@ -115,7 +115,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<IActionResult> DeleteOrders(int id)
         {
             var Orders = await _context.Orders.FirstOrDefaultAsync(x => x.OrderID == id);

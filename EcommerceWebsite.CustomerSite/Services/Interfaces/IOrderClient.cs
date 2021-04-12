@@ -11,5 +11,6 @@ namespace EcommerceWebsite.CustomerSite.Services.Interfaces
         Task<IList<OrderVm>> GetOrders(string idUser);
         Task<IList<CartItemsVm>> GetOrder(int id);
         Task<OrderVm> PostOrders(List<CartItemsVm> ListItem);
+        Task<bool> DeleteOrders(int id);
     }
 }
