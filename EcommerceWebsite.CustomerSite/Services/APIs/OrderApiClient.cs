@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,15 +30,18 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<OrderVm> GetOrder(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IList<OrderVm>> GetOrders()
+        public async Task<IList<CartItemsVm>> GetOrder(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/Order");
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/Order/" + id);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<IList<CartItemsVm>>();
+        }
+
+        public async Task<IList<OrderVm>> GetOrders(string idUser)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync(_configuration["BackendUrl:Default"] + "/api/Order?idUser=" + idUser);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IList<OrderVm>>();
         }

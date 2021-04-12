@@ -26,9 +26,9 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IList<OrderVm>>> GetOrders()
+        public async Task<ActionResult<IList<OrderVm>>> GetOrders(string idUser)
         {
-            return await _context.Orders
+            return await _context.Orders.Where(o => o.Users.Id == idUser)
                 .Select(x => new OrderVm
                 {
                     OrderID = x.OrderID,
@@ -39,22 +39,31 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<OrderVm>> GetOrder(int id)
-        {
-            var Orders = await _context.Orders.FindAsync(id);
+        public async Task<ActionResult<IList<CartItemsVm>>> GetOrder(int id)
+        {         
+            var Order = await _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).ThenInclude(p => p.ImageFiles).FirstOrDefaultAsync(o => o.OrderID == id);
 
-            if (Orders == null)
+            if (Order == null)
             {
                 return NotFound();
             }
 
-            var OrderVm = new OrderVm
+            List<CartItemsVm> listItem = new List<CartItemsVm>();
+            CartItemsVm cartitem = new CartItemsVm();
+            foreach(OrderDetail x in Order.OrderDetails)
             {
-                OrderID = Orders.OrderID,
-                OrderDate = Orders.OrderDate
-            };
+                cartitem.ProductName = x.Product.ProductName;
+                cartitem.Price = x.UnitPrice;
+                cartitem.Quantity = x.Quantity;
+                cartitem.ImageLocation = new List<string>();
+                for (int i = 0; i < x.Product.ImageFiles.Count; i++)
+                {
+                    cartitem.ImageLocation.Add(x.Product.ImageFiles.ElementAt(i).ImageLocation);
+                }
+                listItem.Add(cartitem);
+            }
 
-            return OrderVm;
+            return listItem;
         }
 
         [HttpPut("{id}")]

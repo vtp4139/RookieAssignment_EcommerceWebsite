@@ -8,8 +8,8 @@ namespace EcommerceWebsite.CustomerSite.Services.Interfaces
 {
     public interface IOrderClient
     {
-        Task<IList<OrderVm>> GetOrders();
-        Task<OrderVm> GetOrder(int id);
+        Task<IList<OrderVm>> GetOrders(string idUser);
+        Task<IList<CartItemsVm>> GetOrder(int id);
         Task<OrderVm> PostOrders(List<CartItemsVm> ListItem);
     }
 }

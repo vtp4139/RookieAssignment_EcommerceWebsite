@@ -15,7 +15,7 @@
                 <td style="text-align:center">@item.OrderID</td>
                 <td style="text-align:center">@item.OrderDate</td>
                 <td>
-                    <a asp-action="Remove" asp-route-id="@item.OrderID"><span class="badge badge-success" style="width:50px">Chi tiết</span></a>
+                    <a asp-action="Detail" asp-route-id="@item.OrderID"><span class="badge badge-success" style="width:50px">Chi tiết</span></a>
                     <a asp-action="Remove" asp-route-id="@item.OrderID"><span class="badge badge-danger" style="width:50px">Hủy đơn</span></a>
                 </td>
             </tr>
