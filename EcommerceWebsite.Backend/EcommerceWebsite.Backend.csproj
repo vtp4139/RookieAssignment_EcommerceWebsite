@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-EcommerceWebsite.Backend-2FA1A1F1-4117-4CFF-9A36-01F0B6AC4ED2</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.2" />
