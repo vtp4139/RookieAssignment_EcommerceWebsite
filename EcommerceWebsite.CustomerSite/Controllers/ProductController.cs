@@ -21,20 +21,6 @@ namespace EcommerceWebsite.CustomerSite.Controllers
             _productApiClient = productApiClient;
             _configuration = configuration;
         }
-        public async Task<IActionResult> IndexAsync()
-        {
-            var products = await _productApiClient.GetProducts();
-
-            foreach(var x in products)
-            {
-                for(int i = 0; i < x.ImageLocation.Count; i++)
-                {
-                    string setUrl = _configuration["BackendUrl:Default"] + x.ImageLocation[i];
-                    x.ImageLocation[i] = setUrl;
-                }
-            }
-            return View(products);
-        }
 
         public async Task<IActionResult> GetProductByCategory(int idCate)
         {
