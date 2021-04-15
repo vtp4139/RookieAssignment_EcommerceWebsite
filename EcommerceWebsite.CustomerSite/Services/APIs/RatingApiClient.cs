@@ -1,14 +1,8 @@
 ﻿using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using EcommerceWebsite.Shared;
-using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -18,23 +12,18 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
 {
     public class RatingApiClient : IRatingClient
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IRequest _request;
 
-        public RatingApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public RatingApiClient(IConfiguration configuration, IRequest request)
         {
-            _httpClientFactory = httpClientFactory;
             _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
+            _request = request;
         }
 
         public async Task<RatingVm> PostRating(RatingFormVm RatingFormVm)
         {
-            //Send access token 
-            var client = _httpClientFactory.CreateClient();
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-            client.SetBearerToken(accessToken);
+            var client = _request.SendAccessToken().Result;
 
             //Send json with body
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(RatingFormVm),

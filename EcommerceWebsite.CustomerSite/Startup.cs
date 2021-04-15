@@ -1,3 +1,4 @@
+using EcommerceWebsite.CustomerSite.Services;
 using EcommerceWebsite.CustomerSite.Services.APIs;
 using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +63,7 @@ namespace EcommerceWebsite.CustomerSite
             services.AddTransient<ICategoryClient, CategoryApiClient>();
             services.AddTransient<IRatingClient, RatingApiClient>();
             services.AddTransient<IOrderClient, OrderApiClient>();
+            services.AddTransient<IRequest, Request>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
 

@@ -21,13 +21,13 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IRequest _request;
 
-        public OrderApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public OrderApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IRequest request)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
-            _httpContextAccessor = httpContextAccessor;
+            _request = request;
         }
 
         public async Task<IList<CartItemsVm>> GetOrder(int id)
@@ -48,10 +48,7 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
 
         public async Task<OrderVm> PostOrders(List<CartItemsVm> ListItem)
         {
-            //Send access token 
-            var client = _httpClientFactory.CreateClient();
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-            client.SetBearerToken(accessToken);
+            var client = _request.SendAccessToken().Result;
 
             //Send json with body
             HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(ListItem),
@@ -64,10 +61,7 @@ namespace EcommerceWebsite.CustomerSite.Services.APIs
 
         public async Task<bool> DeleteOrders(int id)
         {
-            //Send access token 
-            var client = _httpClientFactory.CreateClient();
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-            client.SetBearerToken(accessToken);
+            var client = _request.SendAccessToken().Result;
 
             //Send json with body
             var response = await client.DeleteAsync(_configuration["BackendUrl:Default"] + "/api/Order/" + id);
