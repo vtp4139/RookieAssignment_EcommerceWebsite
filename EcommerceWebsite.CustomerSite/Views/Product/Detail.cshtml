@@ -28,7 +28,7 @@
         <div class="col-sm-5">
             <h4>@Model.ProductName</h4>
             <hr style="width:100%;text-align:left;margin-left:0">
-            <p><span class="badge badge-success" style="font-size:large">@Model.RatingPoint</span><b>/5</b> <i>(Có @Model.RatingCount đánh giá)</i></p>
+            <p><span class="badge badge-success" style="font-size:large">@Math.Round(Model.RatingPoint,1)</span><b>/5</b> <i>(Có @Model.RatingCount đánh giá)</i></p>
 
             @using (Html.BeginForm("AddRating", "Rating"))
             {
