@@ -33,7 +33,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<CategoriesVm>> GetCategories(int id)
+        public async Task<ActionResult<CategoriesVm>> GetCategorieById(int id)
         {
             var Categories = await _context.Categories.FindAsync(id);
 
@@ -100,7 +100,7 @@ namespace EcommerceWebsite.Backend.Controllers
             _context.Categories.Remove(Categories);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(Categories);
         }
     }
 }

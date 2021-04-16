@@ -12,30 +12,39 @@ using EcommerceWebsite.Backend.Models;
 
 namespace EcommerceWebsite.Backend.UnitTest
 {
-    public class CategoriesControllerTests : IDisposable
+    public class CategoriesControllerTests : IClassFixture<SqliteDBService>
     {
-        private SqliteConnection _connection;
+        private readonly SqliteDBService _fixture;
         private ApplicationDbContext _dbContext;
-            
-        public CategoriesControllerTests()
-        {
-            _connection = new SqliteConnection("DataSource=:memory:");
-            _connection.Open();
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlite(_connection)
-                .Options;
-            _dbContext = new ApplicationDbContext(options);
-            _dbContext.Database.EnsureCreated();
-        }
 
-        public void Dispose()
+        public CategoriesControllerTests(SqliteDBService fixture)
         {
-            _connection.Close();
+            _fixture = fixture;
+            _fixture.CreateDatabase();
+            _dbContext = _fixture.Context;
         }
 
         [Fact]
-        public async Task PostCategory_Success()
+        public async Task GetCategory()
         {
+            _dbContext.Categories.Add(new Categories
+            {
+                CategoryName = "Ghế gaming",
+                Description = "Ghế gaming chính hãng, uy tín"
+            });
+            await _dbContext.SaveChangesAsync();
+
+            var controller = new CategoriesController(_dbContext);
+            var result = await controller.GetCategories();
+
+            var actionResult = Assert.IsType<ActionResult<IEnumerable<CategoriesVm>>>(result);
+            Assert.NotEmpty(actionResult.Value);
+        }     
+
+        [Fact]
+        public async Task PostCategory()
+        {
+            var dbContext = _fixture.Context;
             var category = new CategoriesFormVm 
             {
              CategoryName = "Ghế gaming",
@@ -52,19 +61,45 @@ namespace EcommerceWebsite.Backend.UnitTest
         }
 
         [Fact]
-        public async Task GetCategory_Success()
+        public async Task GetCategoryById()
         {
-            _dbContext.Categories.Add(new Categories {
+            _dbContext.Categories.Add(new Categories
+            {
+                CategoryID = 100,
                 CategoryName = "Ghế gaming",
                 Description = "Ghế gaming chính hãng, uy tín"
-            });
+            }); ;
+
             await _dbContext.SaveChangesAsync();
 
             var controller = new CategoriesController(_dbContext);
-            var result = await controller.GetCategories();
+            var result = await controller.GetCategorieById(100);
+            var actionResult = Assert.IsType<ActionResult<CategoriesVm>>(result);
 
-            var actionResult = Assert.IsType<ActionResult<IEnumerable<CategoriesVm>>>(result);
-            Assert.NotEmpty(actionResult.Value);
+            Assert.NotNull(actionResult);
+            Assert.NotNull(result);
+            Assert.Equal("Ghế gaming", result.Value.CategoryName);
+            Assert.Equal("Ghế gaming chính hãng, uy tín", result.Value.Description);
+        }
+
+        [Fact]
+        public async Task DeleteCategoryById()
+        {
+            _dbContext.Categories.Add(new Categories
+            {
+                CategoryID = 100,
+                CategoryName = "Ghế gaming",
+                Description = "Ghế gaming chính hãng, uy tín"
+            }); ;
+
+            await _dbContext.SaveChangesAsync();
+
+            var controller = new CategoriesController(_dbContext);
+            var result = await controller.DeleteCategories(100);
+            var actionResult = Assert.IsType<OkObjectResult>(result);
+
+            Assert.NotNull(result);
+            Assert.NotNull(actionResult);
         }
     }
 }
