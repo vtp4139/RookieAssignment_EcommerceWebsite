@@ -56,6 +56,60 @@ namespace EcommerceWebsite.Backend.IdentityServer
 
                 new Client
                 {
+                    ClientName = "react_client",
+                    ClientId = "react_client",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RequireClientSecret = false,
+                    RequireConsent = false,
+                    RequirePkce = true,
+
+                    RedirectUris = new List<string>
+                    {
+                        $"http://localhost:3000/authentication/login-callback",
+                        $"http://localhost:3000/silent-renew.html",
+                        $"http://localhost:3000"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        $"http://localhost:3000/unauthorized",
+                        $"http://localhost:3000/authentication/logout-callback",
+                        $"http://localhost:3000"
+                    },
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        $"http://localhost:3000"
+                    },
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "ecommercewebsite.api"
+                    }
+                },
+
+                   new Client
+                  {
+                    ClientName = "react_admin",
+                    ClientId = "react_admin",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                 
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "ecommercewebsite.api"
+                    },
+
+                    AccessTokenLifetime = 86400,
+                    AllowOfflineAccess = true,
+                },
+
+                new Client
+                {
                     ClientId = "swagger",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.Code,

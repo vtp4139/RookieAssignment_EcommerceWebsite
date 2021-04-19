@@ -1,17 +1,11 @@
 ﻿using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using EcommerceWebsite.Shared;
-using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
