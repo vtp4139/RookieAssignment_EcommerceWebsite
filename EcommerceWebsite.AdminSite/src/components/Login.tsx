@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import {login} from '../store/actions/account.actions';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -16,18 +17,12 @@ const Login = () => {
     const OnChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setInputs((inputs) => ({ ...inputs, [name]: value }));
-        console.log(inputs);
     };
 
     const OnSubmitForm = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (username && password) {
-            
-            //var reponse = await AccountService
-            // console.log('username', username);
-            // console.log('password', password);
-            //const { from }: any = location.state || { from: { pathname: '/' } };
-            //dispatch(login(username, password, from));
+            dispatch(login(username, password));
         }
     };
 
@@ -41,11 +36,11 @@ const Login = () => {
                         <form id="account" onSubmit={OnSubmitForm}>
                             <div className="form-group">
                                 <p>Email</p>
-                                <input className="form-control" onChange={OnChangeInput} placeholder='x@xxx.com' name='username' />
+                                <input type="text" className="form-control" onChange={OnChangeInput} placeholder='x@xxx.com' name='username' />
                             </div>
                             <div className="form-group">
                                 <p>Password</p>
-                                <input className="form-control" onChange={OnChangeInput} placeholder='Enter password' name='password' />
+                                <input type="password"  className="form-control" onChange={OnChangeInput} placeholder='Enter password' name='password' />
                             </div>
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg btn-block">Đăng nhập</button>

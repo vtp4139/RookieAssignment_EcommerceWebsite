@@ -13,6 +13,7 @@ export const login = (username: string, password: string) =>{
         })
         try{
             const reponse = await AccountService.login(username, password);
+            console.log(reponse);
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: reponse

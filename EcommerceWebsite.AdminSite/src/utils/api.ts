@@ -2,8 +2,9 @@ import axios from 'axios';
 
 //Get base url backend to axios
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
+  baseURL: 'https://localhost:44387',
 });
+
 
 //Handle return status code
 api.interceptors.response.use(

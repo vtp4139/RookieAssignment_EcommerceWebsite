@@ -5,7 +5,7 @@ const login = async (username: string, password: string): Promise<any> => {
     urlencoded.append("grant_type", "password");
     urlencoded.append("username", username);
     urlencoded.append("password", password);
-    urlencoded.append("client_id", "react");
+    urlencoded.append("client_id", "react_admin");
     urlencoded.append("client_secret", "secret");
 
     return await api.post('/connect/token', urlencoded)
