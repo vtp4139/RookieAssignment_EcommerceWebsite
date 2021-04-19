@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+    const dispatch = useDispatch();
     //Declare a state
     const [inputs, setInputs] = useState({
         username: '',
@@ -20,8 +22,10 @@ const Login = () => {
     const OnSubmitForm = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (username && password) {
-            console.log('username', username);
-            console.log('password', password);
+            
+            //var reponse = await AccountService
+            // console.log('username', username);
+            // console.log('password', password);
             //const { from }: any = location.state || { from: { pathname: '/' } };
             //dispatch(login(username, password, from));
         }
