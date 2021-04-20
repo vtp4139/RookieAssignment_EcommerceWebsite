@@ -1,24 +1,24 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import About from "./components/About";
 import NavMenu from "./containers/NavMenu";
 import Login from "./components/Login";
+import Product from "./pages/Product.jsx";
+import { history } from './helpers/history';
+
 
 function App() {
   return (
-    <BrowserRouter basename={"/"}>
-    <NavMenu />
-    <div className="container">
-      <div>
-        <Link to="/about">About</Link>
-      </div>
-      <Switch>
-        <Route path="/about" component={About} />
-        <Route path="/" component={Login} />
-      </Switch>
-    </div>
-  </BrowserRouter>
+    <Router history={history}>
+      <NavMenu />
+          <Link to="/about">About</Link>
+        <Switch>
+        <Route path="/product" component={Product} />
+          <Route path="/about" component={About} />
+          <Route path="/" component={Login} />
+        </Switch>
+    </Router>
   );
 }
 

@@ -1,5 +1,6 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 
@@ -42,9 +43,9 @@ namespace EcommerceWebsite.Backend.IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris = { "https://localhost:44374/signin-oidc" },
+                    RedirectUris = { "https://vtpshop-client.azurewebsites.net/signin-oidc" },
 
-                    PostLogoutRedirectUris = { "https://localhost:44374/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { "https://vtpshop-client.azurewebsites.net/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -117,9 +118,9 @@ namespace EcommerceWebsite.Backend.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"https://localhost:44387/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"https://localhost:44387/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"https://localhost:44387" },
+                    RedirectUris =           { $"https://vtpshop.azurewebsites.net/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"https://vtpshop.azurewebsites.net/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"https://vtpshop.azurewebsites.net/" },
 
                     AllowedScopes = new List<string>
                     {

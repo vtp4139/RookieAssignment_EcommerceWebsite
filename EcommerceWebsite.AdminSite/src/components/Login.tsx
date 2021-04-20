@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {login} from '../store/actions/account.actions';
+import { history } from '../helpers/history';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Login = () => {
         e.preventDefault();
         if (username && password) {
             dispatch(login(username, password));
+            history.push("/product");
         }
     };
 
