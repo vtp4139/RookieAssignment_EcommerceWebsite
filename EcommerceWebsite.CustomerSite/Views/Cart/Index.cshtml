@@ -1,4 +1,8 @@
-﻿@model IList<EcommerceWebsite.Shared.CartItemsVm>
+﻿@using System.Globalization;
+@model IList<EcommerceWebsite.Shared.CartItemsVm>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
 
 @if (Model.Count != 0)
 {
@@ -17,9 +21,9 @@
                 <td><img src="@item.ImageLocation[0]" alt="Card image cap" width=180 height=100></td>
                 <td>@item.ProductName</td>
                 <td style="text-align:center">@item.Quantity</td>
-                <td style="color:red; text-align:center">$@item.Price</td>
+                <td style="color:red; text-align:center">$@item.Price.ToString("C", new CultureInfo("VI-vn"))</td>
                 <td>
-                    <a asp-action="Remove" asp-route-id="@item.ProductID"><span class="badge badge-danger" style="width:50px">Xóa</span></a>
+                    <a asp-action="Remove" asp-route-id="@item.ProductID"><span class="badge badge-danger" style="width:50px"><i class="fas fa-trash-alt"></i>&nbsp;Xóa</span></a>
                 </td>
             </tr>
         }

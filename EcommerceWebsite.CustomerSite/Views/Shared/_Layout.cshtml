@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EcommerceWebsite.CustomerSite</title>
+    <title>@ViewData["Title"] - VTP Gear</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <!-- Fontawesome -->
@@ -20,7 +20,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><span id="textlogo"><b>VTP</b>gear</span></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><span id="textlogo"><i class="fas fa-cogs"></i><b>VTP</b>gear</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,12 +28,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i>&nbsp;Trang chủ</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Danh sách đơn hàng</a>
+                                <a class="nav-link text-dark" asp-controller="Order" asp-action="Index"><i class="fas fa-list-ol"></i>&nbsp;Danh sách đơn hàng</a>
                             </li>
                         }
                     </ul>
@@ -45,11 +45,11 @@
                     @if (HttpContextAccessor.HttpContext.Session.Get<List<CartItemsVm>>("SessionCart") != null)
                     {
                         var count = HttpContextAccessor.HttpContext.Session.Get<List<CartItemsVm>>("SessionCart").Count;
-                        <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Cart<span id="quantities" class="badge badge-pill badge-warning">@count</span></button>
+                        <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Giỏ hàng&nbsp;<span id="quantities" class="badge badge-pill badge-warning">@count</span></button>
                     }
                     else
                     {
-                        <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Cart<span id="quantities" class="badge badge-pill badge-warning">0</span></button>
+                        <button class="btn btn-success" type="submit" asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i>&nbsp;Giỏ hàng&nbsp;<span id="quantities" class="badge badge-pill badge-warning">0</span></button>
                     }
                 </form>
             </div>

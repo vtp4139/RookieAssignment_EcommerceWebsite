@@ -1,4 +1,7 @@
 ﻿@model IList<EcommerceWebsite.Shared.OrderVm>
+@{
+    ViewData["Title"] = "DS đơn hàng";
+}
 
 @if (Model.Count != 0)
 {
@@ -11,15 +14,15 @@
 
         @foreach (var item in Model)
         {
-            <tr>               
+            <tr>
                 <td style="text-align:center">@item.OrderID</td>
                 <td style="text-align:center">@item.OrderDate</td>
                 <td style="text-align:center">
-                    <a class="btn btn-success" asp-action="Detail" asp-route-id="@item.OrderID">Chi tiết</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderID">Hủy đơn</a>
+                    <a class="btn btn-success" asp-action="Detail" asp-route-id="@item.OrderID"><i class="fas fa-info-circle"></i>&nbsp;Chi tiết</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderID"><i class="fas fa-ban"></i>&nbsp;Hủy đơn</a>
                 </td>
             </tr>
-        }      
+        }
     </table>
 }
 else

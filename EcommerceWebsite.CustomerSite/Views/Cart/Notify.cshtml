@@ -1,7 +1,11 @@
-﻿<div class="card text-center">
+﻿@{
+    ViewData["Title"] = "Thông báo";
+}
+
+<div class="card text-center">
     <div class="card-body">
         <h5 class="card-title">Đơn hàng của bạn đã được đặt thành công.</h5>
         <p class="card-text">Hàng của bạn sẽ được chuyển đến trong thời gian sớm nhất.</p>
-        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Trở về trang chủ</a>
+        <a class="btn btn-primary" asp-controller="Order" asp-action="Index"><i class="fas fa-list-ol"></i>&nbsp;Xem danh sách đơn hàng</a>
     </div>
 </div>
