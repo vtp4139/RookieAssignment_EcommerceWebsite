@@ -17,7 +17,6 @@ class Product extends React.Component {
             this.setState({
                 ProductList: response.data
             })
-            console.log(this.state.ProductList);
         })
     }
 
@@ -39,7 +38,7 @@ class Product extends React.Component {
                     {this.state.ProductList.map((product, index) => {
                         return (
                             <tr key={index}>
-                                <td><img style={{ width: '90px', height: '75px' }} src={'https://vtpshop.azurewebsites.net' + product.imageLocation[0]} alt={product.productName} /></td>
+                                <td><img style={{ width: '90px', height: '75px' }} src={process.env.REACT_APP_URL_BACKEND + product.imageLocation[0]} alt={product.productName} /></td>
                                 <td scope="row">{product.productID}</td>
                                 <td> {product.productName}</td>
                                 <td> {product.price}</td>

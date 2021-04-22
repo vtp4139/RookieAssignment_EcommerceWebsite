@@ -12,6 +12,13 @@ class ProductService {
     static UpdateProduct = (id, params) => {
         return api.put('/api/Product/' + id, params);
     }
+
+     //Creat A New Post
+     static CreateProduct = async (params, token) => {
+        return await api.post('/api/Product', params, {
+            headers: {Authorization: "Bearer " + token}
+        })
+    }
 }
 
 export default ProductService
