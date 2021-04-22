@@ -13,10 +13,15 @@ class ProductService {
         return api.put('/api/Product/' + id, params);
     }
 
-     //Creat A New Post
      static CreateProduct = async (params, token) => {
         return await api.post('/api/Product', params, {
             headers: {Authorization: "Bearer " + token}
+        })
+    }
+
+    static DeleteProduct = async (id, token) => {
+        return await api.delete('/api/Product/' + id, {
+            headers: { Authorization: "Bearer " + token }
         })
     }
 }

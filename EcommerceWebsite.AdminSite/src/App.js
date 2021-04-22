@@ -49,14 +49,11 @@ class App extends React.Component {
                 <NavBar/>
                 <Switch>
                     <Route path={["/", "/product"]} exact component={Product} />
+                    <Route path={["/product/create", "/product/update/:id" ]}exact component={ProductCreate} />
                     <Route path="/login" exact component={Login} />            
                     <Route path="/category" exact component={Category} /> 
                     <Route path={["/category/create", "/category/update/:id" ]}exact component={CategoryCreate} /> 
                     <Route path="/user" exact component={User} /> 
-                    {/* <Route path="/create" exact component={Product}/>    */}
-                    {/* <Route path="/product/:id" exact component={ProductUpdate} />
-                    <Route path="/about" exact component={About} />
-                    <Route path="/" exact component={Login} /> */}
                 </Switch>
             </Router>
         )

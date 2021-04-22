@@ -53,7 +53,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<IActionResult> PutCategories(int id, CategoriesFormVm CategoriesFormVm)
         {
             var Categories = await _context.Categories.FindAsync(id);
@@ -71,7 +71,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<ActionResult<CategoriesVm>> PostCategories(CategoriesFormVm CategoriesFormVm)
         {
             var Categories = new Categories
@@ -87,7 +87,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<IActionResult> DeleteCategories(int id)
         {
             var Categories = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);

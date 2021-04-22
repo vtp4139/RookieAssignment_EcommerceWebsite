@@ -7,10 +7,9 @@ import history from "../utilities/history"
 class Product extends React.Component {
     constructor(props) {
         super(props)
-       
+
         const { cookies } = this.props;
-        if(cookies.get('user') === undefined)
-        {
+        if (cookies.get('user') === undefined) {
             history.push('/login');
         }
         this.state = {
@@ -27,10 +26,21 @@ class Product extends React.Component {
         })
     }
 
+    DeleteProduct(id) {
+        const { cookies } = this.props;
+
+        ProductService.DeleteProduct(id, cookies.get('user').access_token).then((response) => {
+            window.location.reload();
+        });
+    }
+
     render() {
         return (
             <div className="container">
-                <table className="table table-striped ">
+                <div>
+                    <Link to={"/product/create"} type="button" class="btn btn-success">Tạo mới</Link>
+                </div>
+                <table className="table table-striped mt-3">
                     <tbody>
                         <tr>
                             <th>Hình ảnh</th>
@@ -51,8 +61,8 @@ class Product extends React.Component {
                                 <td> {product.createdDate}</td>
                                 <td>
                                     <div>
-                                        <Link className="badge badge-warning" to={'/product/'+product.productID} style={{ width: 50 }}> Cập nhật</Link>
-                                        <span className="badge badge-info" style={{ width: 50 }} >Xóa</span>
+                                        <Link className="badge badge-info" to={'/product/' + product.productID} style={{ width: 70, height: 20 }}> Cập nhật</Link>
+                                        <a className="badge badge-danger" style={{ width: 70, height: 20 }} onClick={() => this.DeleteProduct(product.productID)} href="#">Xóa</a>
                                     </div>
                                 </td>
                             </tr>

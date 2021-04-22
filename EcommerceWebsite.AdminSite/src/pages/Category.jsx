@@ -56,8 +56,8 @@ class Category extends React.Component {
                                 <td> {item.description}</td>
                                 <td>
                                     <div>
-                                        <Link to={`/category/update/${item.categoryID}`} className="badge badge-info" style={{ width: 70 }} >Cập nhập</Link>
-                                        <a className="badge badge-danger" style={{ width: 70 }} onClick={() => this.DeleteCategory(item.categoryID)} href="#">Xóa</a>
+                                        <Link to={`/category/update/${item.categoryID}`} className="badge badge-info" style={{ width: 70, height: 20 }} >Cập nhập</Link>
+                                        <a className="badge badge-danger" style={{ width: 70, height: 20 }} onClick={() => this.DeleteCategory(item.categoryID)} href="#">Xóa</a>
                                     </div>
                                 </td>
                             </tr>

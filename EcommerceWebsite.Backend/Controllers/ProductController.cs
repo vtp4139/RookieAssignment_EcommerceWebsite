@@ -131,7 +131,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<IActionResult> PutProducts(int id, ProductFormVm ProductsFormVm)
         {
             var Products = await _context.Products.FindAsync(id);
@@ -144,8 +144,8 @@ namespace EcommerceWebsite.Backend.Controllers
             Products.ProductName = ProductsFormVm.ProductName;
             Products.Description = ProductsFormVm.Description;
             Products.Price = ProductsFormVm.Price;
-            Products.CreatedDate = ProductsFormVm.CreatedDate;
-            Products.UpdatedDate = ProductsFormVm.UpdatedDate;
+            //Products.CreatedDate = ProductsFormVm.CreatedDate;
+            Products.UpdatedDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
 
@@ -153,17 +153,17 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<ActionResult<ProductVm>> PostProduct(ProductFormVm ProductsFormVm)
         {
             var Products = new Product
             {
                 ProductName = ProductsFormVm.ProductName,
                 Description = ProductsFormVm.Description,
-                Price = ProductsFormVm.Price,
-                CreatedDate = ProductsFormVm.CreatedDate,
-                UpdatedDate = ProductsFormVm.UpdatedDate,
-                CategoryID = ProductsFormVm.CategoryID
+                Price = ProductsFormVm.Price,             
+                CategoryID = ProductsFormVm.CategoryID,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
             };
 
             _context.Products.Add(Products);
@@ -173,7 +173,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "admin")]
+        [Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var Products = await _context.Products.FirstOrDefaultAsync(x => x.ProductID == id);

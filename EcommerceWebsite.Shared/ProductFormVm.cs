@@ -21,10 +21,6 @@ namespace EcommerceWebsite.Shared
 
         public string Images { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime UpdatedDate { get; set; }
-
         [Required(ErrorMessage = "Error: CategoryID is empty")]
         public int CategoryID { get; set; }
     }

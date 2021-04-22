@@ -44,22 +44,27 @@ class CategoryCreate extends Component {
         let categoryName = document.getElementById("categoryName").value;
         let description = document.getElementById("description").value;
 
-        let params = {
-            categoryName: categoryName,
-            description: description,
-        }
-
-        const { cookies } = this.props;
-
-        if (this.state.id) {
-            CategoryService.UpdateCategory(this.state.id, params, cookies.get('user').access_token).then((response) => {
-                history.push('/category');
-            });
+        if (categoryName == '' || description == '') {
+            document.getElementById('error').innerHTML = "Không chừa trống dữ liệu!";
         }
         else {
-            CategoryService.CreateCategory(params, cookies.get('user').access_token).then((response) => {
-                history.push('/category');
-            });
+            let params = {
+                categoryName: categoryName,
+                description: description,
+            }
+
+            const { cookies } = this.props;
+
+            if (this.state.id) {
+                CategoryService.UpdateCategory(this.state.id, params, cookies.get('user').access_token).then((response) => {
+                    history.push('/category');
+                });
+            }
+            else {
+                CategoryService.CreateCategory(params, cookies.get('user').access_token).then((response) => {
+                    history.push('/category');
+                });
+            }
         }
     }
 
@@ -81,6 +86,7 @@ class CategoryCreate extends Component {
                 </div>
 
                 <div class="col-md-offset-2 col-md-10">
+                    <p id="error" className="text-danger"></p>
                     <button onClick={this.ButtonClick} class="btn btn-primary"> {this.state.id ? "Cập nhật" : "Thêm mới"}</button>
                 </div>
 
