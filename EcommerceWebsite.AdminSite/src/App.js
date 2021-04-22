@@ -11,30 +11,43 @@ import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import history from './utilities/history';
-
+import NavBar from "./containers/NavBar";
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 class App extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
 
+    constructor(props) {
+        super(props);
+        this.render = this.render.bind(this);
+        const { cookies } = this.props;
+
+        this.state = {
+            cookies: cookies
+        }
+    }
+
     render() {
+        if(this.state.cookies === undefined)
+        {
+            return (
+                <Router history={history}>
+                    <NavBar/>
+                    <Switch>
+                        <Route path="/" exact component={Login} />  
+                    </Switch>
+                </Router>
+            )
+        }
         return (
-            //   <React.Fragment>
-            //       <Router>             
-            //           <Switch>                                       
-            //               <Route path="/" exact component={Login}/>
-            //               <Route path="/create" exact component={ProductCreate}/>   
-            //               {/* <Route path="/create" exact comp={ProductCreate}>
-            //                     <ProductCreate></ProductCreate>
-            //                 </Route>  */}
-            //           </Switch>
-            //       </Router>
-            //   </React.Fragment>
             <Router history={history}>
+                <NavBar/>
                 <Switch>
-                    <Route path="/" exact component={Login} />
-                    <Route path="/create" exact component={ProductCreate}/>   
+                    <Route path="/" exact component={Product} />
+                    <Route path="/login" exact component={Login} /> 
+                    {/* <Route path="/create" exact component={Product}/>    */}
                     {/* <Route path="/product/:id" exact component={ProductUpdate} />
                     <Route path="/about" exact component={About} />
                     <Route path="/" exact component={Login} /> */}

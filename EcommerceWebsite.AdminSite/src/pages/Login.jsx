@@ -13,6 +13,14 @@ class Login extends React.Component {
 
     constructor(props) {
         super(props)
+
+        //Check if user login 
+        const { cookies } = this.props;
+        if(cookies.get('user') != undefined)
+        {
+            history.push('/');
+        }
+
         this.btnLoginClick = this.btnLoginClick.bind(this)
     }
 
@@ -34,7 +42,7 @@ class Login extends React.Component {
                 } else {
                     const { cookies } = this.props;
                     cookies.set('user', response);
-                    history.push('/create');
+                    window.location.reload();
                 }
             })
         }
@@ -42,12 +50,10 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
             <div className="container  bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset', width: '40%' }}>
                 <h4 className="text-center text-white bg-info p-2 mb-3" style={{ borderWidth: 0 }}>Đăng nhập quản trị</h4>
                 <div className="row  justify-content-md-center">
-                    <div className="col-md-10">
-                        <p id="error" className="text-danger"></p>
+                    <div className="col-md-10">                     
                         <form>
                             <div className="form-group">
                                 <p>Email</p>
@@ -57,6 +63,7 @@ class Login extends React.Component {
                                 <p>Mật khẩu</p>
                                 <input type="password" id="txtPassword" className="form-control" placeholder='Nhập mật khẩu' name='password' />
                             </div>
+                            <p id="error" className="text-danger"></p>
                             <div className="form-group">
                                 <button className="btn btn-primary btn-lg btn-block" onClick={this.btnLoginClick}>Đăng nhập</button>
                             </div>
@@ -64,7 +71,6 @@ class Login extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>
         )
     }
 }

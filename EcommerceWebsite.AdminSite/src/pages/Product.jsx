@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProductService from '../services/product.service'
+import ProductService from '../services/product.service';
+import { withCookies, Cookies } from 'react-cookie';
+import history from "../utilities/history"
 
 class Product extends React.Component {
     constructor(props) {
         super(props)
-
+       
+        const { cookies } = this.props;
+        if(cookies.get('user') === undefined)
+        {
+            history.push('/login');
+        }
         this.state = {
             ProductList: []
         }
@@ -59,4 +66,4 @@ class Product extends React.Component {
     }
 }
 
-export default Product
+export default withCookies(Product)
