@@ -11,6 +11,7 @@ class AccountService {
 
         return api.post('/connect/token', urlencoded)
             .then(response => {
+                console.log('aaa: ' + response);
                 return response.data;
             })
             .catch(error => {

@@ -34,7 +34,8 @@ class Login extends React.Component {
             document.getElementById('error').innerHTML = "Không chừa trống dữ liệu!";
         }
         else{
-            AccountService.login(Email, Password).then((response) => {     
+            AccountService.login(Email, Password).then((response) => {    
+                 console.log(response); 
                 //Check if email or password invalid       
                 if (response.status == 400) {
                     document.getElementById('error').innerHTML = "Email hoặc mật khẩu không chính xác!";

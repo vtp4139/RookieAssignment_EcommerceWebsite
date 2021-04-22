@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import ProductCreate from "./pages/ProductCreate";
 import Category from "./pages/Category";
 import CategoryCreate from "./pages/CategoryCreate";
+import User from "./pages/User";
 
 class App extends React.Component {
     static propTypes = {
@@ -51,6 +52,7 @@ class App extends React.Component {
                     <Route path="/login" exact component={Login} />            
                     <Route path="/category" exact component={Category} /> 
                     <Route path={["/category/create", "/category/update/:id" ]}exact component={CategoryCreate} /> 
+                    <Route path="/user" exact component={User} /> 
                     {/* <Route path="/create" exact component={Product}/>    */}
                     {/* <Route path="/product/:id" exact component={ProductUpdate} />
                     <Route path="/about" exact component={About} />

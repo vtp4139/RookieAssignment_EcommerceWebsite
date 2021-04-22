@@ -45,10 +45,13 @@ class NavBar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <Link to={"/product"} className="nav-link">Quản lý sản phẩm <span className="sr-only">(current)</span></Link>
+                <Link to={"/product"} className="nav-link">Quản lý sản phẩm </Link>
               </li>
               <li className="nav-item active">
-                <Link to={"/category"} className="nav-link">Quản lý loại sản phẩm <span className="sr-only">(current)</span></Link>
+                <Link to={"/category"} className="nav-link">Quản lý loại sản phẩm</Link>
+              </li>
+              <li className="nav-item active">
+                <Link to={"/user"} className="nav-link">Quản lý người dùng </Link>
               </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">

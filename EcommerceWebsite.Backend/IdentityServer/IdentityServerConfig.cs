@@ -90,13 +90,13 @@ namespace EcommerceWebsite.Backend.IdentityServer
                     }
                 },
 
-                   new Client
+                new Client
                   {
                     ClientName = "react_admin",
                     ClientId = "react_admin",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                 
+
 
                     AllowedScopes = new List<string>
                     {
@@ -118,9 +118,9 @@ namespace EcommerceWebsite.Backend.IdentityServer
                     RequireConsent = false,
                     RequirePkce = true,
 
-                    RedirectUris =           { $"https://vtpshop.azurewebsites.net/swagger/oauth2-redirect.html" },
-                    PostLogoutRedirectUris = { $"https://vtpshop.azurewebsites.net/swagger/oauth2-redirect.html" },
-                    AllowedCorsOrigins =     { $"https://vtpshop.azurewebsites.net/" },
+                    RedirectUris =           { $"http://localhost:44387/swagger/oauth2-redirect.html" },
+                    PostLogoutRedirectUris = { $"http://localhost:44387/swagger/oauth2-redirect.html" },
+                    AllowedCorsOrigins =     { $"http://localhost:44387" },
 
                     AllowedScopes = new List<string>
                     {

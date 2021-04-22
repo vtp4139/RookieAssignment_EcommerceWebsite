@@ -30,6 +30,13 @@ namespace EcommerceWebsite.Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var configUrls = new Dictionary<string, string>
+            {
+                ["Mvc"] = Configuration["ConfigUrl:Mvc"],
+                ["Backend"] = Configuration["ConfigUrl:Backend"],
+                ["React"] = Configuration["ConfigUrl:React"]
+            };
+
             //Config cors (React page)
             services.AddCors(options =>
             {

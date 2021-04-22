@@ -29,9 +29,8 @@ class Product extends React.Component {
 
     render() {
         return (
-            <div>
             <div className="container">
-                <table className="table table-striped">
+                <table className="table table-striped ">
                     <tbody>
                         <tr>
                             <th>Hình ảnh</th>
@@ -61,7 +60,6 @@ class Product extends React.Component {
                     })}
                 </table>
             </div>
-        </div>
         )
     }
 }
