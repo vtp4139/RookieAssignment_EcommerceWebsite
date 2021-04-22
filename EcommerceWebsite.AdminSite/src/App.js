@@ -4,15 +4,17 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
-import Product from "./pages/Product";
-import Login from "./pages/Login";
-import ProductCreate from "./pages/ProductCreate";
 import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import history from './utilities/history';
 import NavBar from "./containers/NavBar";
-import { unstable_renderSubtreeIntoContainer } from 'react-dom';
+
+import Product from "./pages/Product";
+import Login from "./pages/Login";
+import ProductCreate from "./pages/ProductCreate";
+import Category from "./pages/Category";
+import CategoryCreate from "./pages/CategoryCreate";
 
 class App extends React.Component {
     static propTypes = {
@@ -45,8 +47,10 @@ class App extends React.Component {
             <Router history={history}>
                 <NavBar/>
                 <Switch>
-                    <Route path="/" exact component={Product} />
-                    <Route path="/login" exact component={Login} /> 
+                    <Route path={["/", "/product"]} exact component={Product} />
+                    <Route path="/login" exact component={Login} />            
+                    <Route path="/category" exact component={Category} /> 
+                    <Route path={["/category/create", "/category/update/:id" ]}exact component={CategoryCreate} /> 
                     {/* <Route path="/create" exact component={Product}/>    */}
                     {/* <Route path="/product/:id" exact component={ProductUpdate} />
                     <Route path="/about" exact component={About} />
