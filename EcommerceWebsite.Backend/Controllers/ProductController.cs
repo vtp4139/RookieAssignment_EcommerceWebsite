@@ -158,8 +158,7 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<ActionResult<ProductVm>> PostProduct([FromForm] ProductFormVm ProductsFormVm)
         {
             var Products = new Product

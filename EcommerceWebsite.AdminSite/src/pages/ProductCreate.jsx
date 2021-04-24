@@ -14,10 +14,11 @@ class ProductCreate extends Component {
         super(props);
         //Use this to get variable in constructor into funtion
         this.CreateProduct = this.CreateProduct.bind(this);
+        this.PreviewImages = this.PreviewImages.bind(this);
 
         //Get category to load option
         this.state = {
-            CategoryList: []
+            CategoryList: [],
         }
     }
 
@@ -66,10 +67,20 @@ class ProductCreate extends Component {
         }
     }
 
-    renderOption = () => {
-        return this.state.CategoryList.map((item, index) => {
-            return <option key={index} value={item.categoryID}>{item.categoryName}</option>
-        })
+    PreviewImages() {
+        var divImage = document.getElementById("preview");
+        divImage.innerHTML = '';
+        let images = document.getElementById("images").files;
+        if (images) {
+            for (let i = 0; i < images.length; i++) {
+                var image = document.createElement("img");
+                image.className = "mr-3";
+                image.src = URL.createObjectURL(images[i]);
+                image.style.width = "75px";
+                image.style.height = "75px";
+                divImage.appendChild(image);
+            }
+        }
     }
 
     render() {
@@ -92,7 +103,7 @@ class ProductCreate extends Component {
 
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Loại sản phẩm</b></label>
-                    <div class="col-md-5">                                           
+                    <div class="col-md-5">
                         <select className='form-control' style={{ height: '50%' }} id="categoryID">
                             {
                                 this.state.CategoryList.map((item, index) => {
@@ -106,8 +117,14 @@ class ProductCreate extends Component {
                 <div className='form-group'>
                     <label class="control-label col-md-2"><b>Hình ảnh sản phẩm</b></label>
                     <div class="col-md-5">
-                        <input type='file' multiple id="images" className="form-control" />
+                        <input type='file' multiple id="images" className="form-control" onChange={this.PreviewImages} />
                         <p id="errorImage" className="text-danger"></p>
+                    </div>
+                </div>
+
+                <div className='form-group'>
+                    <div class="col-md-5" id="preview">
+                        
                     </div>
                 </div>
 
@@ -117,7 +134,7 @@ class ProductCreate extends Component {
                         <textarea className="form-control" id="description" name='name' />
                     </div>
                 </div>
-                
+
                 <div class="col-md-offset-2 col-md-10">
                     <p id="error" className="text-danger"></p>
                     <button onClick={this.CreateProduct} class="btn btn-primary">Cập nhập</button>
