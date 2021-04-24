@@ -34,25 +34,33 @@ class ProductCreate extends Component {
         let description = document.getElementById("description").value;
         let price = document.getElementById("price").value;
         let categoryID = document.getElementById("categoryID").value;
+        let images = document.getElementById("images").files;
 
         if (productName == '' || description == '' || price == '') {
             document.getElementById('error').innerHTML = "Không chừa trống dữ liệu!";
         }
-        else if(parseInt(price) > 10000)
-        {
+        else if (images.length == 0) {
+            document.getElementById('errorImage').innerHTML = "Phải thêm tối thiểu 1 hình ảnh cho sản phẩm!";
+        }
+        else if (parseInt(price) > 10000) {
             document.getElementById('errorPrice').innerHTML = "Giá tiền không được vượt quá 10000!";
         }
         else {
-            let params = {
-                productName: productName,
-                description: description,
-                price: price,
-                images: null,
-                categoryID: categoryID
+            //Set image list
+            const formData = new FormData();
+            if (images) {
+                for (let i = 0; i < images.length; i++) {
+                    formData.append("images", images[i], images[i].name);
+                }
             }
 
-            const { cookies } = this.props
-            ProductService.CreateProduct(params, cookies.get('user').access_token).then((response) => {
+            formData.append('productName', productName.toString());
+            formData.append('description', description.toString());
+            formData.append('price', price.toString());
+            formData.append('categoryID', categoryID.toString());
+
+            const { cookies } = this.props;
+            ProductService.CreateProduct(formData, cookies.get('user').access_token).then((response) => {
                 history.push('/product');
             });
         }
@@ -84,8 +92,7 @@ class ProductCreate extends Component {
 
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Loại sản phẩm</b></label>
-                    <div class="col-md-5">
-                        {/* <input type='text' className="form-control" id="categoryID" name='name' placeholder='Nhập tên sản phẩm...' /> */}
+                    <div class="col-md-5">                                           
                         <select className='form-control' style={{ height: '50%' }} id="categoryID">
                             {
                                 this.state.CategoryList.map((item, index) => {
@@ -96,17 +103,25 @@ class ProductCreate extends Component {
                     </div>
                 </div>
 
+                <div className='form-group'>
+                    <label class="control-label col-md-2"><b>Hình ảnh sản phẩm</b></label>
+                    <div class="col-md-5">
+                        <input type='file' multiple id="images" className="form-control" />
+                        <p id="errorImage" className="text-danger"></p>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Mô tả:</b></label>
                     <div class="col-md-7">
                         <textarea className="form-control" id="description" name='name' />
                     </div>
                 </div>
+                
                 <div class="col-md-offset-2 col-md-10">
                     <p id="error" className="text-danger"></p>
                     <button onClick={this.CreateProduct} class="btn btn-primary">Cập nhập</button>
                 </div>
-
             </div>
 
         )

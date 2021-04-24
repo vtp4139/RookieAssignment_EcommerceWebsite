@@ -2,10 +2,13 @@
 using EcommerceWebsite.Backend.Models;
 using EcommerceWebsite.Shared;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,10 +20,12 @@ namespace EcommerceWebsite.Backend.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -153,8 +158,9 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<ActionResult<ProductVm>> PostProduct(ProductFormVm ProductsFormVm)
+        //[Authorize]
+        [AllowAnonymous]
+        public async Task<ActionResult<ProductVm>> PostProduct([FromForm] ProductFormVm ProductsFormVm)
         {
             var Products = new Product
             {
@@ -165,9 +171,30 @@ namespace EcommerceWebsite.Backend.Controllers
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now,
             };
-
             _context.Products.Add(Products);
             await _context.SaveChangesAsync();
+
+            //Add image 
+            if ((ProductsFormVm.Images != null) && (ProductsFormVm.Images.Count > 0))
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                foreach (IFormFile file in ProductsFormVm.Images)
+                {
+                    string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    ImageFile nFile = new ImageFile();
+                    nFile.ImageLocation = $"/images/{fileName}";
+                    nFile.UploadedTime = DateTime.Now;
+                    nFile.ProductID = Products.ProductID;
+
+                    _context.ImageFiles.Add(nFile);
+                    await _context.SaveChangesAsync();                  
+                }
+            }
 
             return CreatedAtAction("GetProducts", new { id = Products.ProductID }, new ProductVm { ProductName = Products.ProductName, Description = Products.Description, Price = Products.Price, CreatedDate = Products.CreatedDate, UpdatedDate = Products.UpdatedDate });
         }

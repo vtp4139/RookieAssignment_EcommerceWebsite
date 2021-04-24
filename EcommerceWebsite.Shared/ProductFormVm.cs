@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace EcommerceWebsite.Shared
         [Range(0, 999.99, ErrorMessage = "The value must belong (0, 999.99) !")]
         public decimal Price { get; set; }
 
-        public string Images { get; set; }
-
         [Required(ErrorMessage = "Error: CategoryID is empty")]
         public int CategoryID { get; set; }
+
+        public List<IFormFile> Images { get; set; }
     }
 }

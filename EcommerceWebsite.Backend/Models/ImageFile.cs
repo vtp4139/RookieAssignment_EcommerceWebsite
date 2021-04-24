@@ -16,9 +16,6 @@ namespace EcommerceWebsite.Backend.Models
         [Column(TypeName = "nvarchar(300)")]
         public string ImageLocation { get; set; }
 
-        [NotMapped]
-        public IFormFile File { get; set; }
-
         public DateTime UploadedTime { get; set; }
 
         [ForeignKey("Product")]
