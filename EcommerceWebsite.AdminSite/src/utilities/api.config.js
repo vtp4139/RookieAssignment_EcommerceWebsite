@@ -8,7 +8,7 @@ const api = axios.create({
 
 //Handle return status code
 api.interceptors.response.use(
-  (res) => res,
+  (res) => { console.log(res.data); return res; },
   (err) => {
     if (err.response.status === 401) {
       //todo

@@ -61,7 +61,7 @@ class Product extends React.Component {
                                 <td> {product.createdDate}</td>
                                 <td>
                                     <div>
-                                        <Link className="badge badge-info" to={'/product/' + product.productID} style={{ width: 70, height: 20 }}> Cập nhật</Link>
+                                        <Link className="badge badge-info" to={`/product/update/${product.productID}`} style={{ width: 70, height: 20 }}> Cập nhật</Link>
                                         <a className="badge badge-danger" style={{ width: 70, height: 20 }} onClick={() => this.DeleteProduct(product.productID)} href="#">Xóa</a>
                                     </div>
                                 </td>

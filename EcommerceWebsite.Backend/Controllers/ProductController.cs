@@ -32,7 +32,7 @@ namespace EcommerceWebsite.Backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductVm>>> GetProducts()
         {
-            var productList = await _context.Products.Include(p => p.ImageFiles).ToListAsync();
+            var productList = await _context.Products.Include(p => p.ImageFiles).Include(p => p.Categories).ToListAsync();
 
             if (productList == null)
             {
@@ -49,7 +49,9 @@ namespace EcommerceWebsite.Backend.Controllers
                 get.Description = x.Description;
                 get.Price = x.Price;
                 get.CreatedDate = x.CreatedDate;
+                get.CategoryName = x.Categories.CategoryName;
                 get.UpdatedDate = x.UpdatedDate;
+
                 get.ImageLocation = new List<string>();
 
                 for (int i = 0; i < x.ImageFiles.Count; i++)
@@ -65,7 +67,7 @@ namespace EcommerceWebsite.Backend.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ProductVm>> GetProduct(int id)
         {
-            var Product = await _context.Products.Include(p => p.ImageFiles).Include(p => p.Ratings).FirstOrDefaultAsync(x => x.ProductID == id);
+            var Product = await _context.Products.Include(p => p.ImageFiles).Include(p => p.Ratings).Include(p => p.Categories).FirstOrDefaultAsync(x => x.ProductID == id);
             int _RatingCount = 0;
             double _RatingPoint = 0;
 
@@ -74,10 +76,10 @@ namespace EcommerceWebsite.Backend.Controllers
                 return NotFound();
             }
 
-            if(Product.Ratings != null)
+            if (Product.Ratings != null)
             {
                 _RatingCount = Product.Ratings.Count();
-                if(_RatingCount > 0)
+                if (_RatingCount > 0)
                     _RatingPoint = Product.Ratings.Average(r => r.RatingPoint);
             }
 
@@ -89,8 +91,7 @@ namespace EcommerceWebsite.Backend.Controllers
                 Description = Product.Description,
                 CreatedDate = Product.CreatedDate,
                 UpdatedDate = Product.UpdatedDate,
-                //RatingCount = Product.Ratings.Count(),
-                //RatingPoint = Product.Ratings.Average(r => r.RatingPoint),
+                CategoryName = Product.Categories.CategoryName,
                 RatingCount = _RatingCount,
                 RatingPoint = _RatingPoint,
                 ImageLocation = new List<string>()
@@ -157,6 +158,33 @@ namespace EcommerceWebsite.Backend.Controllers
             return NoContent();
         }
 
+        [HttpDelete("DeleteImages/{imageLocation}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteImages(string imageLocation)
+        {
+            string str = imageLocation.Replace("%2F", "/");
+            var Image = await _context.ImageFiles.FirstOrDefaultAsync(x => x.ImageLocation == str);
+
+            if (Image == null)
+            {
+                return NotFound();
+            }
+
+            _context.ImageFiles.Remove(Image);
+            await _context.SaveChangesAsync();
+
+            string fileName = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+            string[] temp = str.Split("/");
+            fileName = Path.Combine(fileName, temp[2].ToString());
+
+            if (System.IO.File.Exists(fileName))
+            {
+                System.IO.File.Delete(fileName);
+            }
+
+            return NoContent();
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<ProductVm>> PostProduct([FromForm] ProductFormVm ProductsFormVm)
@@ -165,7 +193,7 @@ namespace EcommerceWebsite.Backend.Controllers
             {
                 ProductName = ProductsFormVm.ProductName,
                 Description = ProductsFormVm.Description,
-                Price = ProductsFormVm.Price,             
+                Price = ProductsFormVm.Price,
                 CategoryID = ProductsFormVm.CategoryID,
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now,
@@ -191,7 +219,7 @@ namespace EcommerceWebsite.Backend.Controllers
                     nFile.ProductID = Products.ProductID;
 
                     _context.ImageFiles.Add(nFile);
-                    await _context.SaveChangesAsync();                  
+                    await _context.SaveChangesAsync();
                 }
             }
 

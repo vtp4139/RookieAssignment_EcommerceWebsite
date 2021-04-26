@@ -14,6 +14,8 @@ namespace EcommerceWebsite.Shared
 
         public string Description { get; set; }
 
+        public string CategoryName { get; set; }
+
         public decimal Price { get; set; }
 
         public DateTime CreatedDate { get; set; }

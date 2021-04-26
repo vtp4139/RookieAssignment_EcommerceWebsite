@@ -1,4 +1,4 @@
-import {api} from '../utilities/api.config';
+import { api } from '../utilities/api.config';
 
 class ProductService {
     static GetAllProduct = () => {
@@ -13,14 +13,20 @@ class ProductService {
         return api.put('/api/Product/' + id, params);
     }
 
-     static CreateProduct = async (params, token) => {
+    static CreateProduct = async (params, token) => {
         return await api.post('/api/Product', params, {
-            headers: {Authorization: "Bearer " + token}
+            headers: { Authorization: "Bearer " + token }
         })
     }
 
     static DeleteProduct = async (id, token) => {
         return await api.delete('/api/Product/' + id, {
+            headers: { Authorization: "Bearer " + token }
+        })
+    }
+
+    static DeleteImage = async (id, token) => {
+        return await api.delete(`/api/Product/DeleteImages/${id}`, {
             headers: { Authorization: "Bearer " + token }
         })
     }

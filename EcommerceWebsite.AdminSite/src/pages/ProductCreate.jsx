@@ -15,10 +15,20 @@ class ProductCreate extends Component {
         //Use this to get variable in constructor into funtion
         this.CreateProduct = this.CreateProduct.bind(this);
         this.PreviewImages = this.PreviewImages.bind(this);
+        this.DeleteImage = this.DeleteImage.bind(this);
 
         //Get category to load option
         this.state = {
+            id: this.props.match.params.id,
             CategoryList: [],
+            product:
+            {
+                productName: "",
+                price: "",
+                description: "",
+                categoryName: "",
+                imageLocation: [],
+            },
         }
     }
 
@@ -28,6 +38,14 @@ class ProductCreate extends Component {
                 CategoryList: response.data
             })
         });
+
+        if (this.state.id) {
+            ProductService.GetProduct(this.state.id).then((response) => {
+                this.setState({
+                    product: response.data
+                })
+            });
+        }
     }
 
     CreateProduct() {
@@ -83,20 +101,29 @@ class ProductCreate extends Component {
         }
     }
 
+    DeleteImage(imageLocation) {
+        const { cookies } = this.props;
+        var str = imageLocation.replaceAll("/", "%2F");
+        console.log(str);
+        ProductService.DeleteImage(str, cookies.get('user').access_token).then((response) => {
+            window.location.reload();
+        });
+    }
+
     render() {
         return (
             <div className="container">
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Tên sản phẩm:</b></label>
                     <div class="col-md-5">
-                        <input type='text' className="form-control" id="productName" name='name' placeholder='Logitech G102,..' />
+                        <input type='text' className="form-control" id="productName" name='name' defaultValue={this.state.product.productID} placeholder='Logitech G102,..' />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Giá tiền: </b></label>
                     <div class="col-md-5">
-                        <input type='number' className="form-control" id="price" name='name' placeholder='100, 200,...' />
+                        <input type='number' className="form-control" id="price" name='name' defaultValue={this.state.product.price} placeholder='100, 200,...' />
                         <p id="errorPrice" className="text-danger"></p>
                     </div>
                 </div>
@@ -107,7 +134,7 @@ class ProductCreate extends Component {
                         <select className='form-control' style={{ height: '50%' }} id="categoryID">
                             {
                                 this.state.CategoryList.map((item, index) => {
-                                    return <option key={index} value={item.categoryID}>{item.categoryName}</option>
+                                    return <option key={index} value={item.categoryID} selected={item.categoryName == this.state.product.categoryName ? true : false}>{item.categoryName}</option>
                                 })
                             }
                         </select>
@@ -123,15 +150,30 @@ class ProductCreate extends Component {
                 </div>
 
                 <div className='form-group'>
+                    <div class="col-md-5">
+                        {
+                            this.state.product.imageLocation.map((item, index) => {
+                                return (
+                                    <span style={{ position: 'relative' }} key={index}>
+                                        <img className="mr-3" style={{ width: '75px', height: '75px' }} src={process.env.REACT_APP_URL_BACKEND + item} />
+                                        {this.state.product.imageLocation.length != 1 && (<a style={{ position: 'absolute', right: 10 }} onClick={() => this.DeleteImage(item)} className="badge badge-pill badge-danger" href="#">&#x2715;</a>)}
+                                    </span>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+                <div className='form-group'>
                     <div class="col-md-5" id="preview">
-                        
+
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Mô tả:</b></label>
                     <div class="col-md-7">
-                        <textarea className="form-control" id="description" name='name' />
+                        <textarea className="form-control" defaultValue={this.state.product.description} id="description" name='name' />
                     </div>
                 </div>
 
