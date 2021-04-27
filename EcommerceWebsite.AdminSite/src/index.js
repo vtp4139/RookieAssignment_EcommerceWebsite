@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Provider } from "react-redux";
 import { CookiesProvider } from 'react-cookie';
 import store from "./stores/store";
+import "./assets/fontawesome-free-5.15.2-web/css/all.css";
 
 ReactDOM.render(
   <React.StrictMode>

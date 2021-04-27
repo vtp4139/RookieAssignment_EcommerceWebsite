@@ -150,7 +150,6 @@ namespace EcommerceWebsite.Backend.Controllers
             Products.ProductName = ProductsFormVm.ProductName;
             Products.Description = ProductsFormVm.Description;
             Products.Price = ProductsFormVm.Price;
-            //Products.CreatedDate = ProductsFormVm.CreatedDate;
             Products.UpdatedDate = DateTime.Now;
             Products.CategoryID = ProductsFormVm.CategoryID;
 
@@ -236,6 +235,7 @@ namespace EcommerceWebsite.Backend.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
+
                     ImageFile nFile = new ImageFile();
                     nFile.ImageLocation = $"/images/{fileName}";
                     nFile.UploadedTime = DateTime.Now;

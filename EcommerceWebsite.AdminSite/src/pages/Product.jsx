@@ -2,11 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ProductService from '../services/product.service';
 import { withCookies, Cookies } from 'react-cookie';
-import history from "../utilities/history"
+import history from "../utilities/history";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class Product extends React.Component {
     constructor(props) {
         super(props)
+
+        this.DeleteProduct = this.DeleteProduct.bind(this);
 
         const { cookies } = this.props;
         if (cookies.get('user') === undefined) {
@@ -26,19 +30,36 @@ class Product extends React.Component {
         })
     }
 
-    DeleteProduct(id) {
-        const { cookies } = this.props;
+    DeleteProduct = (id) => {
+        confirmAlert({
+            title: 'Xóa sản phẩm',
+            message: 'Bạn muốn xóa sản phẩm này?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        const { cookies } = this.props;
 
-        ProductService.DeleteProduct(id, cookies.get('user').access_token).then((response) => {
-            window.location.reload();
+                        ProductService.DeleteProduct(id, cookies.get('user').access_token).then((response) => {
+                            window.location.reload();
+                        });
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ],
         });
-    }
+    };
 
     render() {
         return (
             <div className="container">
                 <div>
-                    <Link to={"/product/create"} type="button" class="btn btn-success">Tạo mới</Link>
+                    <Link to={"/product/create"} type="button" class="btn btn-success">
+                        <i class="fas fa-plus-square" />&nbsp;Tạo mới
+                    </Link>
                 </div>
                 <table className="table table-striped mt-3">
                     <tbody>
@@ -61,8 +82,12 @@ class Product extends React.Component {
                                 <td> {product.createdDate}</td>
                                 <td>
                                     <div>
-                                        <Link className="badge badge-info" to={`/product/update/${product.productID}`} style={{ width: 70, height: 20 }}> Cập nhật</Link>
-                                        <a className="badge badge-danger" style={{ width: 70, height: 20 }} onClick={() => this.DeleteProduct(product.productID)} href="#">Xóa</a>
+                                        <Link className="badge badge-info" to={`/product/update/${product.productID}`} style={{ width: 90, height: 22, fontSize: 13 }}>
+                                            <i class="fas fa-edit" />&nbsp;Cập nhật
+                                        </Link>
+                                        <a className="badge badge-danger" style={{ width: 90, height: 22, fontSize: 13 }} onClick={() => this.DeleteProduct(product.productID)} href="#">
+                                            <i class="fas fa-trash-alt" />&nbsp;Xóa
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

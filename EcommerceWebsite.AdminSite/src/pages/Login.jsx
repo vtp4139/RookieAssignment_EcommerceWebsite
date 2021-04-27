@@ -34,20 +34,20 @@ class Login extends React.Component {
             document.getElementById('error').innerHTML = "Không chừa trống dữ liệu!";
         }
         else{
-            AccountService.login(Email, Password).then((response) => {    
+            AccountService.login(Email, Password).then((res) => {    
                 //Check if email or password invalid       
-                if (response.status == 400) {
+                if (res.status == 400) {
                     document.getElementById('error').innerHTML = "Email hoặc mật khẩu không chính xác!";
            
                 }
-                AccountService.CheckRoles(response.access_token).then((response) => {                    
+                AccountService.CheckRoles(res.access_token).then((response) => {                    
                     if(response.data.role != 'admin')
                     {
                         document.getElementById('error').innerHTML = "Tài khoản không có quyền quản trị!";
                     }
                     else {
                         const { cookies } = this.props;
-                        cookies.set('user', response);
+                        cookies.set('user', res);
                         window.location.reload();
                     }
                 })     

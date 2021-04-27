@@ -81,6 +81,7 @@ class ProductCreate extends Component {
             formData.append('categoryID', categoryID.toString());
 
             const { cookies } = this.props;
+            console.log(cookies.get('user').access_token);
             if (this.state.id) {
                 ProductService.UpdateProduct(this.state.id, formData, cookies.get('user').access_token).then((response) => {
                     history.push('/product');
@@ -202,10 +203,9 @@ class ProductCreate extends Component {
 
                 <div class="col-md-offset-2 col-md-10">
                     <p id="error" className="text-danger"></p>
-                    <button onClick={this.CreateProduct} class="btn btn-primary">Cập nhập</button>
+                    <button onClick={this.CreateProduct} class="btn btn-primary">{this.state.id ? "Cập nhật" : "Thêm mới"}</button>
                 </div>
             </div>
-
         )
     }
 }
