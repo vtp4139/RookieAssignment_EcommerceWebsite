@@ -20,6 +20,12 @@ class AccountService {
                   }
             })
     }
+
+    static CheckRoles = async (token) => {
+        return await api.get('/connect/userinfo', {
+            headers: { Authorization: "Bearer " + token }
+        })
+    }
 }
 
 export default AccountService

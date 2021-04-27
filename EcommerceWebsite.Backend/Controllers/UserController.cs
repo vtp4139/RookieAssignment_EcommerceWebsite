@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EcommerceWebsite.Backend.Controllers
@@ -45,6 +46,17 @@ namespace EcommerceWebsite.Backend.Controllers
                 UserVmList.Add(get);
             }
             return UserVmList;
+        }
+
+        [HttpGet]
+        [Route("roles")]
+        public ActionResult<bool> CheckRoles()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            List<string> roles = claimsIdentity.FindAll("role").Select(c => c.Value).ToList();
+            if (roles.Contains("admin"))
+                return Ok();
+            return NoContent();
         }
     }
 }
