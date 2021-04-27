@@ -55,10 +55,12 @@ class ProductCreate extends Component {
         let categoryID = document.getElementById("categoryID").value;
         let images = document.getElementById("images").files;
 
+        console.log(price);
+
         if (productName == '' || description == '' || price == '') {
             document.getElementById('error').innerHTML = "Không chừa trống dữ liệu!";
         }
-        else if (images.length == 0) {
+        else if (images.length == 0 && this.state.id == undefined) {
             document.getElementById('errorImage').innerHTML = "Phải thêm tối thiểu 1 hình ảnh cho sản phẩm!";
         }
         else if (parseInt(price) > 10000) {
@@ -79,9 +81,16 @@ class ProductCreate extends Component {
             formData.append('categoryID', categoryID.toString());
 
             const { cookies } = this.props;
-            ProductService.CreateProduct(formData, cookies.get('user').access_token).then((response) => {
-                history.push('/product');
-            });
+            if (this.state.id) {
+                ProductService.UpdateProduct(this.state.id, formData, cookies.get('user').access_token).then((response) => {
+                    history.push('/product');
+                });
+            }
+            else {
+                ProductService.CreateProduct(formData, cookies.get('user').access_token).then((response) => {
+                    history.push('/product');
+                });
+            }
         }
     }
 
@@ -92,13 +101,28 @@ class ProductCreate extends Component {
         if (images) {
             for (let i = 0; i < images.length; i++) {
                 var image = document.createElement("img");
+                var spanImg = document.createElement("span");
+                var spanPlus = document.createElement("span");
+
+                //Set style
+                spanImg.style.cssText = 'position: relative ';
+                spanPlus.style.cssText = 'position: absolute; right: 10px';
+                image.style.cssText = 'width: 75px; height: 75px';
+
+                //Set class
+                spanPlus.className = 'badge badge-pill badge-success';
                 image.className = "mr-3";
-                image.src = URL.createObjectURL(images[i]);
-                image.style.width = "75px";
-                image.style.height = "75px";
-                divImage.appendChild(image);
+
+                //Set data
+                image.src = URL.createObjectURL(images[i]);     
+                spanPlus.innerText = 'Mới';
+
+                //Return
+                divImage.appendChild(spanImg);
+                spanImg.appendChild(image);
+                spanImg.appendChild(spanPlus);
             }
-        }
+        }          
     }
 
     DeleteImage(imageLocation) {
@@ -116,14 +140,14 @@ class ProductCreate extends Component {
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Tên sản phẩm:</b></label>
                     <div class="col-md-5">
-                        <input type='text' className="form-control" id="productName" name='name' defaultValue={this.state.product.productID} placeholder='Logitech G102,..' />
+                        <input type='text' className="form-control" id="productName" name='name' defaultValue={this.state.product.productName} placeholder='Logitech G102,..' />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-2"><b>Giá tiền: </b></label>
                     <div class="col-md-5">
-                        <input type='number' className="form-control" id="price" name='name' defaultValue={this.state.product.price} placeholder='100, 200,...' />
+                        <input type='number' className="form-control" id="price" name='name' defaultValue={this.state.product.price} placeholder='100, 200,...' min="1" max="10000" />
                         <p id="errorPrice" className="text-danger"></p>
                     </div>
                 </div>
@@ -166,7 +190,6 @@ class ProductCreate extends Component {
 
                 <div className='form-group'>
                     <div class="col-md-5" id="preview">
-
                     </div>
                 </div>
 

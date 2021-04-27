@@ -9,8 +9,10 @@ class ProductService {
         return api.get('/api/Product/' + id);
     }
 
-    static UpdateProduct = (id, params) => {
-        return api.put('/api/Product/' + id, params);
+    static UpdateProduct = (id, params, token) => {
+        return api.put('/api/Product/' + id, params, {
+            headers: { Authorization: "Bearer " + token }
+        });
     }
 
     static CreateProduct = async (params, token) => {

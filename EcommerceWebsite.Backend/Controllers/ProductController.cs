@@ -138,7 +138,7 @@ namespace EcommerceWebsite.Backend.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutProducts(int id, ProductFormVm ProductsFormVm)
+        public async Task<IActionResult> PutProducts(int id, [FromForm] ProductFormVm ProductsFormVm)
         {
             var Products = await _context.Products.FindAsync(id);
 
@@ -152,8 +152,31 @@ namespace EcommerceWebsite.Backend.Controllers
             Products.Price = ProductsFormVm.Price;
             //Products.CreatedDate = ProductsFormVm.CreatedDate;
             Products.UpdatedDate = DateTime.Now;
+            Products.CategoryID = ProductsFormVm.CategoryID;
 
             await _context.SaveChangesAsync();
+
+            //Add image 
+            if ((ProductsFormVm.Images != null) && (ProductsFormVm.Images.Count > 0))
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                foreach (IFormFile file in ProductsFormVm.Images)
+                {
+                    string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                    string filePath = Path.Combine(uploadsFolder, fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    ImageFile nFile = new ImageFile();
+                    nFile.ImageLocation = $"/images/{fileName}";
+                    nFile.UploadedTime = DateTime.Now;
+                    nFile.ProductID = Products.ProductID;
+
+                    _context.ImageFiles.Add(nFile);
+                    await _context.SaveChangesAsync();
+                }
+            }
 
             return NoContent();
         }

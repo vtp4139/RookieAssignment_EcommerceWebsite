@@ -39,7 +39,6 @@ class CategoryCreate extends Component {
         }
     }
 
-
     ButtonClick() {
         let categoryName = document.getElementById("categoryName").value;
         let description = document.getElementById("description").value;
