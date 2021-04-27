@@ -253,13 +253,27 @@ namespace EcommerceWebsite.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var Products = await _context.Products.FirstOrDefaultAsync(x => x.ProductID == id);
+            var Products = await _context.Products.Include(p => p.ImageFiles).FirstOrDefaultAsync(x => x.ProductID == id);
 
             if (Products == null)
             {
                 return NotFound();
             }
 
+            if (Products.ImageFiles != null && Products.ImageFiles.Count() > 0)
+            {
+                foreach (var imgFile in Products.ImageFiles)
+                {
+                    string fileName = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    string[] temp = imgFile.ImageLocation.Split("/");
+                    fileName = Path.Combine(fileName, temp[2].ToString());
+
+                    if (System.IO.File.Exists(fileName))
+                    {
+                        System.IO.File.Delete(fileName);
+                    }
+                }
+            }
             _context.Products.Remove(Products);
             await _context.SaveChangesAsync();
 
