@@ -61,9 +61,9 @@ class NavBar extends React.Component {
               </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">
-              <button className="btn btn-danger my-2 my-sm-0" onClick={this.Logout} type="submit">
+              <a href="/" className="btn btn-danger my-2 my-sm-0" onClick={this.Logout} type="submit">
                 <i class="fas fa-sign-out-alt" />&nbsp;Đăng xuất
-              </button>
+              </a>
             </form>
           </div>
         </nav>

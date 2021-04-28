@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import { ToastContainer, toast } from 'react-toastify';
 import history from './utilities/history';
 import NavBar from "./containers/NavBar";
 import Footer from "./containers/Footer";
@@ -42,6 +43,7 @@ class App extends React.Component {
         {
             return (
                 <Router history={history}>
+                    <ToastContainer />
                     <NavBar/>
                     <Switch>
                         <Route path="/" exact component={Login} />  
@@ -52,6 +54,7 @@ class App extends React.Component {
         }
         return (
             <Router history={history}>
+                <ToastContainer />
                 <NavBar/>
                 <Switch>
                     <Route path={["/", "/product"]} exact component={Product} />

@@ -5,6 +5,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import history from "../utilities/history";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { toast } from 'react-toastify';
 
 class Category extends React.Component {
     constructor(props) {
@@ -20,6 +21,13 @@ class Category extends React.Component {
     }
 
     componentDidMount() {
+        //Show notify when return success requets
+        const { cookies } = this.props;
+        if (cookies.get('message')) {
+            toast.success(cookies.get('message'));
+            cookies.remove('message');
+        }
+
         CategoryService.GetAllCategory().then((response) => {
             this.setState({
                 CategoryList: response.data
@@ -38,6 +46,8 @@ class Category extends React.Component {
                         const { cookies } = this.props;
 
                         CategoryService.DeleteCategory(id, cookies.get('user').access_token).then((response) => {
+                            const { cookies } = this.props;
+                            cookies.set('message', "Xóa loại sản phẩm thành công!");
                             window.location.reload();
                         });
                     }

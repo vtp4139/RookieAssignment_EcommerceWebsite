@@ -56,11 +56,13 @@ class CategoryCreate extends Component {
 
             if (this.state.id) {
                 CategoryService.UpdateCategory(this.state.id, params, cookies.get('user').access_token).then((response) => {
+                    cookies.set('message', "Cập nhật loại sản phẩm thành công!");
                     history.push('/category');
                 });
             }
             else {
                 CategoryService.CreateCategory(params, cookies.get('user').access_token).then((response) => {
+                    cookies.set('message', "Thêm loại sản phẩm thành công!");
                     history.push('/category');
                 });
             }

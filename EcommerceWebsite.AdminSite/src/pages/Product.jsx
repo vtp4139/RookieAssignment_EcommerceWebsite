@@ -5,6 +5,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import history from "../utilities/history";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { toast } from 'react-toastify';
 
 class Product extends React.Component {
     constructor(props) {
@@ -22,7 +23,13 @@ class Product extends React.Component {
     }
 
     componentDidMount() {
-        console.log("ProductList");
+        //Show notify when return success requets
+        const { cookies } = this.props;
+        if (cookies.get('message')) {
+            toast.success(cookies.get('message'));
+            cookies.remove('message');
+        }
+        
         ProductService.GetAllProduct().then((response) => {
             this.setState({
                 ProductList: response.data
@@ -41,6 +48,8 @@ class Product extends React.Component {
                         const { cookies } = this.props;
 
                         ProductService.DeleteProduct(id, cookies.get('user').access_token).then((response) => {
+                            const { cookies } = this.props;
+                            cookies.set('message', "Xóa sản phẩm thành công!");
                             window.location.reload();
                         });
                     }
@@ -61,7 +70,7 @@ class Product extends React.Component {
                         <i class="fas fa-plus-square" />&nbsp;Tạo mới
                     </Link>
                 </div>
-                <table className="table mt-3 border bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset'}}>
+                <table className="table mt-3 border bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset' }}>
                     <thead className="bg-info text-white">
                         <tr>
                             <th>Hình ảnh</th>
