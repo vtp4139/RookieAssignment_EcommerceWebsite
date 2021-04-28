@@ -28,23 +28,25 @@ class User extends React.Component {
     render() {
         return (
             <div className="container">
-                <table className="table table-striped mt-3">
-                    <tbody>
+                <table className="table bg-white mt-3" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset'}}>
+                    <thead className="bg-info text-white">
                         <tr>
                             <th>Mã user</th>
                             <th>Email</th>
                             <th>Họ và tên</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.UserList.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td scope="row">{item.userID}</td>
+                                    <td> {item.email}</td>
+                                    <td> {item.fullname}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
-                    {this.state.UserList.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td scope="row">{item.userID}</td>
-                                <td> {item.email}</td>
-                                <td> {item.fullname}</td>                             
-                            </tr>
-                        )
-                    })}
                 </table>
             </div>
         )

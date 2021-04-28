@@ -63,8 +63,8 @@ class ProductCreate extends Component {
         else if (images.length == 0 && this.state.id == undefined) {
             document.getElementById('errorImage').innerHTML = "Phải thêm tối thiểu 1 hình ảnh cho sản phẩm!";
         }
-        else if (parseInt(price) > 10000) {
-            document.getElementById('errorPrice').innerHTML = "Giá tiền không được vượt quá 10000!";
+        else if (parseInt(price) > 100000) {
+            document.getElementById('errorPrice').innerHTML = "Giá tiền không được vượt quá 100000!";
         }
         else {
             //Set image list
@@ -112,10 +112,10 @@ class ProductCreate extends Component {
 
                 //Set class
                 spanPlus.className = 'badge badge-pill badge-success';
-                image.className = "mr-3";
+                image.className = "mr-3 mb-2";
 
                 //Set data
-                image.src = URL.createObjectURL(images[i]);     
+                image.src = URL.createObjectURL(images[i]);
                 spanPlus.innerText = 'Mới';
 
                 //Return
@@ -123,7 +123,7 @@ class ProductCreate extends Component {
                 spanImg.appendChild(image);
                 spanImg.appendChild(spanPlus);
             }
-        }          
+        }
     }
 
     DeleteImage(imageLocation) {
@@ -137,73 +137,67 @@ class ProductCreate extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div class="form-group">
-                    <label class="control-label col-md-2"><b>Tên sản phẩm:</b></label>
-                    <div class="col-md-5">
-                        <input type='text' className="form-control" id="productName" name='name' defaultValue={this.state.product.productName} placeholder='Logitech G102,..' />
-                    </div>
-                </div>
+            <div className="container  bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset', width: '40%' }}>
+                <h5 className="text-center text-white bg-info p-2 mb-3" style={{ borderWidth: 0 }}>{this.state.id ? "Cập nhật sản phẩm" : "Thêm mới sản phẩm"}</h5>
+                <div className="row  justify-content-md-center">
+                    <div className="col-md-10">
+                        <div class="form-group">
+                            <label class="control-label"><b>Tên sản phẩm:</b></label>
+                            <input type='text' className="form-control" id="productName" name='name' defaultValue={this.state.product.productName} placeholder='Logitech G102,..' />
+                        </div>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2"><b>Giá tiền: </b></label>
-                    <div class="col-md-5">
-                        <input type='number' className="form-control" id="price" name='name' defaultValue={this.state.product.price} placeholder='100, 200,...' min="1" max="10000" />
-                        <p id="errorPrice" className="text-danger"></p>
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label class="control-label "><b>Giá tiền: </b></label>
+                            <input type='number' className="form-control" id="price" name='name' defaultValue={this.state.product.price} placeholder='100, 200,...' min="1" max="10000" />
+                            <p id="errorPrice" className="text-danger"></p>
+                        </div>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2"><b>Loại sản phẩm</b></label>
-                    <div class="col-md-5">
-                        <select className='form-control' style={{ height: '50%' }} id="categoryID">
+                        <div class="form-group">
+                            <label class="control-label "><b>Loại sản phẩm</b></label>
+                            <select className='form-control' style={{ height: '50%' }} id="categoryID">
+                                {
+                                    this.state.CategoryList.map((item, index) => {
+                                        return <option key={index} value={item.categoryID} selected={item.categoryName == this.state.product.categoryName ? true : false}>{item.categoryName}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
+
+                        <div className='form-group'>
+                            <label class="control-label "><b>Hình ảnh sản phẩm</b></label>
+                            <input type='file' multiple id="images" className="form-control" onChange={this.PreviewImages} />
+                            <p id="errorImage" className="text-danger"></p>
+
+                        </div>
+
+                        <div className='form-group'>
                             {
-                                this.state.CategoryList.map((item, index) => {
-                                    return <option key={index} value={item.categoryID} selected={item.categoryName == this.state.product.categoryName ? true : false}>{item.categoryName}</option>
+                                this.state.product.imageLocation.map((item, index) => {
+                                    return (
+                                        <span style={{ position: 'relative' }} key={index}>
+                                            <img className="mr-3 mb-2" style={{ width: '75px', height: '75px' }} src={process.env.REACT_APP_URL_BACKEND + item} />
+                                            {this.state.product.imageLocation.length != 1 && (<a style={{ position: 'absolute', right: 10 }} onClick={() => this.DeleteImage(item)} className="badge badge-pill badge-danger" href="#">&#x2715;</a>)}
+                                        </span>
+                                    )
                                 })
                             }
-                        </select>
-                    </div>
-                </div>
+                        </div>
 
-                <div className='form-group'>
-                    <label class="control-label col-md-2"><b>Hình ảnh sản phẩm</b></label>
-                    <div class="col-md-5">
-                        <input type='file' multiple id="images" className="form-control" onChange={this.PreviewImages} />
-                        <p id="errorImage" className="text-danger"></p>
-                    </div>
-                </div>
+                        <div className='form-group'>
+                            <div id="preview">
+                            </div>
+                        </div>
 
-                <div className='form-group'>
-                    <div class="col-md-5">
-                        {
-                            this.state.product.imageLocation.map((item, index) => {
-                                return (
-                                    <span style={{ position: 'relative' }} key={index}>
-                                        <img className="mr-3" style={{ width: '75px', height: '75px' }} src={process.env.REACT_APP_URL_BACKEND + item} />
-                                        {this.state.product.imageLocation.length != 1 && (<a style={{ position: 'absolute', right: 10 }} onClick={() => this.DeleteImage(item)} className="badge badge-pill badge-danger" href="#">&#x2715;</a>)}
-                                    </span>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label class="control-label"><b>Mô tả:</b></label>
+                            <textarea className="form-control" defaultValue={this.state.product.description} style={{ height: 100}}  id="description" name='name' />
+                        </div>
 
-                <div className='form-group'>
-                    <div class="col-md-5" id="preview">
+                        <div class="col-md-offset-2 ">
+                            <p id="error" className="text-danger"></p>
+                            <button onClick={this.CreateProduct} class="btn btn-primary mb-4">{this.state.id ? "Cập nhật" : "Thêm mới"}</button>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2"><b>Mô tả:</b></label>
-                    <div class="col-md-7">
-                        <textarea className="form-control" defaultValue={this.state.product.description} id="description" name='name' />
-                    </div>
-                </div>
-
-                <div class="col-md-offset-2 col-md-10">
-                    <p id="error" className="text-danger"></p>
-                    <button onClick={this.CreateProduct} class="btn btn-primary">{this.state.id ? "Cập nhật" : "Thêm mới"}</button>
                 </div>
             </div>
         )

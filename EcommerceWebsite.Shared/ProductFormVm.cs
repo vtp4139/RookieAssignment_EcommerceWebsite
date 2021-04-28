@@ -17,7 +17,7 @@ namespace EcommerceWebsite.Shared
         public string Description { get; set; }
 
         [Required]
-        [Range(0, 999.99, ErrorMessage = "The value must belong (0, 999.99) !")]
+        [Range(0, 99999.99, ErrorMessage = "The value must belong (0, 99999.99) !")]
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "Error: CategoryID is empty")]

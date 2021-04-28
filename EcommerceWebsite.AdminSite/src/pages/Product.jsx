@@ -61,38 +61,40 @@ class Product extends React.Component {
                         <i class="fas fa-plus-square" />&nbsp;Tạo mới
                     </Link>
                 </div>
-                <table className="table table-striped mt-3">
-                    <tbody>
+                <table className="table mt-3 border bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset'}}>
+                    <thead className="bg-info text-white">
                         <tr>
                             <th>Hình ảnh</th>
-                            <th>Mã sản phẩm</th>
+                            <th>Mã </th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>
                             <th>Ngày tạo</th>
                             <th>Chức năng</th>
                         </tr>
-                    </tbody>
-                    {this.state.ProductList.map((product, index) => {
-                        return (
-                            <tr key={index}>
-                                <td><img style={{ width: '90px', height: '75px' }} src={process.env.REACT_APP_URL_BACKEND + product.imageLocation[0]} alt={product.productName} /></td>
-                                <td scope="row">{product.productID}</td>
-                                <td> {product.productName}</td>
-                                <td> {product.price}</td>
-                                <td> {product.createdDate}</td>
-                                <td>
-                                    <div>
-                                        <Link className="badge badge-info" to={`/product/update/${product.productID}`} style={{ width: 90, height: 22, fontSize: 13 }}>
-                                            <i class="fas fa-edit" />&nbsp;Cập nhật
+                    </thead>
+                    <tbody>
+                        {this.state.ProductList.map((product, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td><img style={{ width: '90px', height: '75px' }} src={process.env.REACT_APP_URL_BACKEND + product.imageLocation[0]} alt={product.productName} /></td>
+                                    <td scope="row">{product.productID}</td>
+                                    <td> {product.productName}</td>
+                                    <td style={{ color: "red" }}> {product.price}&#36;</td>
+                                    <td> {product.createdDate}</td>
+                                    <td>
+                                        <div>
+                                            <Link className="badge badge-primary" to={`/product/update/${product.productID}`} style={{ width: 90, height: 22, fontSize: 13 }}>
+                                                <i class="fas fa-edit" />&nbsp;Cập nhật
                                         </Link>
-                                        <a className="badge badge-danger" style={{ width: 90, height: 22, fontSize: 13 }} onClick={() => this.DeleteProduct(product.productID)} href="#">
-                                            <i class="fas fa-trash-alt" />&nbsp;Xóa
+                                            <a className="badge badge-danger" style={{ width: 90, height: 22, fontSize: 13 }} onClick={() => this.DeleteProduct(product.productID)} href="#">
+                                                <i class="fas fa-trash-alt" />&nbsp;Xóa
                                         </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        )
-                    })}
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
                 </table>
             </div>
         )

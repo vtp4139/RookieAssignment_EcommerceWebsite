@@ -9,6 +9,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import history from './utilities/history';
 import NavBar from "./containers/NavBar";
+import Footer from "./containers/Footer";
 
 import Product from "./pages/Product";
 import Login from "./pages/Login";
@@ -32,6 +33,10 @@ class App extends React.Component {
         }
     }
 
+    componentWillMount() {
+        document.body.style.backgroundColor = " #F2F2F2";
+    }
+
     render() {
         if(this.state.cookies === undefined)
         {
@@ -41,6 +46,7 @@ class App extends React.Component {
                     <Switch>
                         <Route path="/" exact component={Login} />  
                     </Switch>
+                    <Footer/>
                 </Router>
             )
         }
@@ -55,6 +61,7 @@ class App extends React.Component {
                     <Route path={["/category/create", "/category/update/:id" ]}exact component={CategoryCreate} /> 
                     <Route path="/user" exact component={User} /> 
                 </Switch>
+                <Footer/>
             </Router>
         )
     }

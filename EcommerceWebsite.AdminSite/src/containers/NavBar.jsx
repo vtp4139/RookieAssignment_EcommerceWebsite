@@ -38,7 +38,7 @@ class NavBar extends React.Component {
     return (
       <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-          <Link to={"/"} className="navbar-brand">  <i class="fas fa-toolbox" />&nbsp;<b>VTPGear:</b> Quản trị</Link>
+          <Link to={"/"} className="navbar-brand"> <i class="fas fa-toolbox" />&nbsp;<b>VTPGear:</b> Quản trị</Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
@@ -61,7 +61,9 @@ class NavBar extends React.Component {
               </li>
             </ul>
             <form className="form-inline my-2 my-lg-0">
-              <button className="btn btn-danger my-2 my-sm-0" onClick={this.Logout} type="submit">Đăng xuất</button>
+              <button className="btn btn-danger my-2 my-sm-0" onClick={this.Logout} type="submit">
+                <i class="fas fa-sign-out-alt" />&nbsp;Đăng xuất
+              </button>
             </form>
           </div>
         </nav>

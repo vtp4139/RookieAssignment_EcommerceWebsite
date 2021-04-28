@@ -69,28 +69,27 @@ class CategoryCreate extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div class="form-group">
-                    <label class="control-label col-md-2"><b>Tên loại: </b></label>
-                    <div class="col-md-5">
-                        <input type='text' className="form-control" defaultValue={this.state.category.categoryName} id="categoryName" name='name' placeholder='Nhập tên sản phẩm...' />
+            <div className="container  bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset', width: '40%' }}>
+                <h5 className="text-center text-white bg-info p-2 mb-3" style={{ borderWidth: 0 }}>{this.state.id ? "Cập nhật loại" : "Thêm mới loại"}</h5>
+                <div className="row  justify-content-md-center">
+                    <div className="col-md-10">
+                        <div className="container">
+                            <div class="form-group">
+                                <label class="control-label "><b>Tên loại: </b></label>
+                                <input type='text' className="form-control" defaultValue={this.state.category.categoryName} id="categoryName" name='name' placeholder='Nhập tên sản phẩm...' />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label "><b>Mô tả</b></label>
+                                <textarea className="form-control" id="description" style={{ height: 150}} defaultValue={this.state.category.description} name='name' placeholder='Nhập tên sản phẩm...' />
+                            </div>
+                            <div class="col-md-offset-2 ">
+                                <p id="error" className="text-danger"></p>
+                                <button onClick={this.ButtonClick} class="btn btn-primary mb-4"> {this.state.id ? "Cập nhật" : "Thêm mới"}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="control-label col-md-2"><b>Mô tả</b></label>
-                    <div class="col-md-7">
-                        <textarea className="form-control" id="description" defaultValue={this.state.category.description} name='name' placeholder='Nhập tên sản phẩm...' />
-                    </div>
-                </div>
-
-                <div class="col-md-offset-2 col-md-10">
-                    <p id="error" className="text-danger"></p>
-                    <button onClick={this.ButtonClick} class="btn btn-primary"> {this.state.id ? "Cập nhật" : "Thêm mới"}</button>
-                </div>
-
             </div>
-
         )
     }
 }
