@@ -6,6 +6,7 @@ import history from "../utilities/history";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { toast } from 'react-toastify';
+import { format } from 'date-fns'
 
 class Product extends React.Component {
     constructor(props) {
@@ -13,24 +14,26 @@ class Product extends React.Component {
 
         this.DeleteProduct = this.DeleteProduct.bind(this);
 
-        console.log(props);
         const { cookies } = this.props;
-        if (cookies.get('user') === undefined) {
-            history.push('/login');
-        }
         this.state = {
-            ProductList: []
+            ProductList: [],
+            cookies: cookies,
+        }
+
+        //Check user login or not
+        if (this.state.cookies.get('user') === undefined) {
+            history.push('/login');
         }
     }
 
     componentDidMount() {
         //Show notify when return success requets
-        const { cookies } = this.props;
-        if (cookies.get('message')) {
-            toast.success(cookies.get('message'));
-            cookies.remove('message');
+        const getCookie = this.state.cookies;
+        if (getCookie.get('message')) {
+            toast.success(getCookie.get('message'));
+            getCookie.remove('message');
         }
-        
+
         ProductService.GetAllProduct().then((response) => {
             this.setState({
                 ProductList: response.data
@@ -44,19 +47,16 @@ class Product extends React.Component {
             message: 'Bạn muốn xóa sản phẩm này?',
             buttons: [
                 {
-                    label: 'Yes',
+                    label: 'Xác nhận',
                     onClick: () => {
-                        const { cookies } = this.props;
-
-                        ProductService.DeleteProduct(id, cookies.get('user').access_token).then((response) => {
-                            const { cookies } = this.props;
-                            cookies.set('message', "Xóa sản phẩm thành công!");
+                        ProductService.DeleteProduct(id, this.state.cookies.get('user').access_token).then((response) => {
+                            this.state.cookies.set('message', "Xóa sản phẩm thành công!");
                             window.location.reload();
                         });
                     }
                 },
                 {
-                    label: 'No',
+                    label: 'Hủy',
                     onClick: () => { }
                 }
             ],
@@ -90,7 +90,7 @@ class Product extends React.Component {
                                     <td scope="row">{product.productID}</td>
                                     <td> {product.productName}</td>
                                     <td style={{ color: "red" }}> {product.price}&#36;</td>
-                                    <td> {product.createdDate}</td>
+                                    <td> {format(Date.parse(product.createdDate), "yyyy-MM-dd hh:mm a")}</td>
                                     <td>
                                         <div>
                                             <Link className="badge badge-primary" to={`/product/update/${product.productID}`} style={{ width: 90, height: 22, fontSize: 13 }}>

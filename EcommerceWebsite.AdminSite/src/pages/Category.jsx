@@ -12,21 +12,24 @@ class Category extends React.Component {
         super(props)
 
         const { cookies } = this.props;
-        if (cookies.get('user') === undefined) {
+        this.state = {
+            CategoryList: [],
+            cookies: cookies
+        }
+
+        if (this.state.cookies.get('user') === undefined) {
             history.push('/login');
         }
-        this.state = {
-            CategoryList: []
-        }
+       
     }
 
     componentDidMount() {
-        //Show notify when return success requets
-        const { cookies } = this.props;
-        if (cookies.get('message')) {
-            toast.success(cookies.get('message'));
-            cookies.remove('message');
-        }
+       //Show notify when return success requets
+       const getCookie = this.state.cookies;
+       if (getCookie.get('message')) {
+           toast.success(getCookie.get('message'));
+           getCookie.remove('message');
+       }
 
         CategoryService.GetAllCategory().then((response) => {
             this.setState({
@@ -41,19 +44,16 @@ class Category extends React.Component {
             message: 'Bạn muốn xóa sản phẩm này?',
             buttons: [
                 {
-                    label: 'Yes',
+                    label: 'Xác nhận',
                     onClick: () => {
-                        const { cookies } = this.props;
-
-                        CategoryService.DeleteCategory(id, cookies.get('user').access_token).then((response) => {
-                            const { cookies } = this.props;
-                            cookies.set('message', "Xóa loại sản phẩm thành công!");
+                        CategoryService.DeleteCategory(id, this.state.cookies.get('user').access_token).then((response) => {
+                            this.state.cookies.set('message', "Xóa loại sản phẩm thành công!");
                             window.location.reload();
                         });
                     }
                 },
                 {
-                    label: 'No',
+                    label: 'Hủy',
                     onClick: () => { }
                 }
             ],

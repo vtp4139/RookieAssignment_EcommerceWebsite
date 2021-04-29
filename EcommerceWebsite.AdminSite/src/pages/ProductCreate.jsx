@@ -84,13 +84,13 @@ class ProductCreate extends Component {
             if (this.state.id) {
                 ProductService.UpdateProduct(this.state.id, formData, cookies.get('user').access_token).then((response) => {
                     cookies.set('message', "Cập nhật sản phẩm thành công!");
-                    history.push('/product');
+                    history.goBack();
                 });
             }
             else {
                 ProductService.CreateProduct(formData, cookies.get('user').access_token).then((response) => {
                     cookies.set('message', "Thêm sản phẩm thành công!");
-                    history.push('/product');
+                    history.goBack();
                 });
             }
         }
