@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import "bootstrap/dist/css/bootstrap.css";
 import { CookiesProvider } from 'react-cookie';
-import "./assets/fontawesome-free-5.15.2-web/css/all.css";
+import "./assets/fontawesome/css/all.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
