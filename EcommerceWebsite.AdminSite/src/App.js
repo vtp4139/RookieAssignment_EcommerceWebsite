@@ -4,7 +4,6 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { ToastContainer, toast } from 'react-toastify';
@@ -64,16 +63,10 @@ class App extends React.Component {
                     <Route path={["/category/create", "/category/update/:id" ]}exact component={CategoryCreate} /> 
                     <Route path="/user" exact component={User} /> 
                 </Switch>
-                <Footer/>
+                {/* <Footer/> */}
             </Router>
         )
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        user: state.user
-    }
-}
-
-export default connect(mapStateToProps)(withCookies(App))
+export default withCookies(App)

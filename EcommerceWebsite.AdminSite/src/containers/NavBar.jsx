@@ -30,7 +30,7 @@ class NavBar extends React.Component {
       return (
         <header>
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-            <a className="navbar-brand" href="#">Trang quản trị</a>
+            <Link to={"/"} className="navbar-brand"> <i class="fas fa-toolbox" />&nbsp;<b>VTPGear:</b> Quản trị</Link>
           </nav>
         </header>
       )

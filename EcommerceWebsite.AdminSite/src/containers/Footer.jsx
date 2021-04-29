@@ -7,12 +7,11 @@ class Footer extends React.Component {
     }
     render() {
         return (
-            <footer className="border-top footer text-muted">
-                <div className="container mt-3 mb-3">
+            <footer class="border-top footer text-muted">
+                <div className="container">
                     &copy;VTPGear - Trang quản trị / Võ Tuấn Phương - Rookie - NashTech
                 </div>
             </footer>
-
         )
     }
 }

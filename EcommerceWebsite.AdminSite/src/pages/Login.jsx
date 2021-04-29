@@ -1,8 +1,6 @@
 import React from "react";
 import AccountService from "../services/account.service"
 import history from "../utilities/history"
-import { connect } from 'react-redux';
-import {SetUser} from "../stores/actions/user.actions";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -16,8 +14,7 @@ class Login extends React.Component {
 
         //Check if user login 
         const { cookies } = this.props;
-        if(cookies.get('user') != undefined)
-        {
+        if (cookies.get('user') != undefined) {
             history.push('/');
         }
 
@@ -29,20 +26,18 @@ class Login extends React.Component {
         let Email = document.getElementById("txtEmail").value;
         let Password = document.getElementById("txtPassword").value;
 
-        if(Email == '' || Password == '')
-        {
+        if (Email == '' || Password == '') {
             document.getElementById('error').innerHTML = "Không chừa trống dữ liệu!";
         }
-        else{
-            AccountService.login(Email, Password).then((res) => {    
+        else {
+            AccountService.login(Email, Password).then((res) => {
                 //Check if email or password invalid       
                 if (res.status == 400) {
                     document.getElementById('error').innerHTML = "Email hoặc mật khẩu không chính xác!";
-           
+
                 }
-                AccountService.CheckRoles(res.access_token).then((response) => {                    
-                    if(response.data.role != 'admin')
-                    {
+                AccountService.CheckRoles(res.access_token).then((response) => {
+                    if (response.data.role != 'admin') {
                         document.getElementById('error').innerHTML = "Tài khoản không có quyền quản trị!";
                     }
                     else {
@@ -50,29 +45,35 @@ class Login extends React.Component {
                         cookies.set('user', res);
                         window.location.reload();
                     }
-                })     
+                })
             })
         }
     }
 
     render() {
         return (
-            <div className="container  bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset', width: '40%' }}>
-                <h4 className="text-center text-white bg-info p-2 mb-3" style={{ borderWidth: 0 }}>Đăng nhập quản trị</h4>
+            <div className="container  bg-white" style={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px', padding: 'unset', width: '35%',marginTop:100, marginBottom: 200 }}>
+                <h5 className="text-center text-white bg-primary p-2 mb-3" style={{ borderWidth: 0 }}>Đăng nhập</h5>
                 <div className="row  justify-content-md-center">
-                    <div className="col-md-10">                     
+                    <div className="col-md-10">
                         <form>
-                            <div className="form-group">
-                                <p>Email</p>
-                                <input type="email" className="form-control" id="txtEmail" placeholder='x@xxx.com' name='username' />
+                            <div className="input-group mt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope-square"/></span>
+                                </div>
+                                <input type="email" className="form-control" id="txtEmail" placeholder='Email' name='username' />
                             </div>
-                            <div className="form-group">
-                                <p>Mật khẩu</p>
-                                <input type="password" id="txtPassword" className="form-control" placeholder='Nhập mật khẩu' name='password' />
+                            <div className="input-group mt-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"/></span>
+                                </div>
+                                <input type="password" id="txtPassword" className="form-control" placeholder='Mật khẩu' name='password' />
                             </div>
                             <p id="error" className="text-danger"></p>
-                            <div className="form-group">
-                                <button className="btn btn-primary btn-lg btn-block" onClick={this.btnLoginClick}>Đăng nhập</button>
+                            <div className="form-group mt-4">
+                                <button className="btn btn-primary btn-block" onClick={this.btnLoginClick}>
+                                <i class="fas fa-sign-in-alt"/>&nbsp;Đăng nhập
+                                    </button>
                             </div>
                         </form>
                     </div>
@@ -82,10 +83,4 @@ class Login extends React.Component {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    SetUser: user => {
-        dispatch(SetUser(user))
-    }
-})
-
-export default connect(null, mapDispatchToProps)(withCookies(Login))
+export default withCookies(Login)
