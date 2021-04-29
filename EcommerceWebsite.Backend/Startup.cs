@@ -62,7 +62,7 @@ namespace EcommerceWebsite.Backend
             })
                .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
                .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-               .AddInMemoryClients(IdentityServerConfig.Clients)
+               .AddInMemoryClients(IdentityServerConfig.Clients(configUrls))
                .AddAspNetIdentity<User>()
                .AddProfileService<CustomProfileService>()
                .AddDeveloperSigningCredential(); // not recommended for production - you need to store your key material somewhere secure
@@ -118,8 +118,8 @@ namespace EcommerceWebsite.Backend
         {          
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
-                //app.UseMigrationsEndPoint();
+                app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -127,8 +127,6 @@ namespace EcommerceWebsite.Backend
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

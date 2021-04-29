@@ -13,6 +13,7 @@ class Product extends React.Component {
 
         this.DeleteProduct = this.DeleteProduct.bind(this);
 
+        console.log(props);
         const { cookies } = this.props;
         if (cookies.get('user') === undefined) {
             history.push('/login');
