@@ -1,6 +1,5 @@
 # Rookie Assignment Project - Ecommerce Website
 ## Technologies and frameworks used
----------------
 - **Technology**: ASP.Net Core 5.0, Identity Server 4, Entity Framework 5.0, React
 - **Database**: Microsoft Sql Server 
 - **Deploy**: Microsoft Azure
