@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using EcommerceWebsite.CustomerSite.Services;
 using EcommerceWebsite.CustomerSite.Services.APIs;
 using EcommerceWebsite.CustomerSite.Services.Interfaces;
@@ -76,8 +78,8 @@ namespace EcommerceWebsite.CustomerSite
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-        }
-
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+        }      
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -100,6 +102,7 @@ namespace EcommerceWebsite.CustomerSite
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
+            app.UseNotyf();
 
             app.UseEndpoints(endpoints =>
             {

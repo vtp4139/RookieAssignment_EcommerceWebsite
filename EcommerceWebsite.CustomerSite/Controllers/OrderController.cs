@@ -1,4 +1,5 @@
-﻿using EcommerceWebsite.CustomerSite.Services.Interfaces;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -13,11 +14,13 @@ namespace EcommerceWebsite.CustomerSite.Controllers
     {
         private readonly IOrderClient _orderApiClient;
         private readonly IConfiguration _configuration;
+        private readonly INotyfService _notyf;
 
-        public OrderController(IOrderClient orderApiClient, IConfiguration configuration)
+        public OrderController(IOrderClient orderApiClient, IConfiguration configuration, INotyfService notyf)
         {
             _orderApiClient = orderApiClient;
             _configuration = configuration;
+            _notyf = notyf;
         }
 
         public async Task<IActionResult> IndexAsync()
@@ -46,7 +49,7 @@ namespace EcommerceWebsite.CustomerSite.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var ListItem = await _orderApiClient.DeleteOrders(id);
-
+            _notyf.Success("Hủy đơn hàng thành công!", 4);
             return RedirectToAction("Index");
         }
     }

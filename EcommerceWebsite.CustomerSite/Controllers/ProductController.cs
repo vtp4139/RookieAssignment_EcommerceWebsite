@@ -1,4 +1,5 @@
-﻿using EcommerceWebsite.CustomerSite.Services;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using EcommerceWebsite.CustomerSite.Services;
 using EcommerceWebsite.CustomerSite.Services.Interfaces;
 using EcommerceWebsite.Shared;
 using Microsoft.AspNetCore.Http;
@@ -15,11 +16,13 @@ namespace EcommerceWebsite.CustomerSite.Controllers
     {
         private readonly IProductClient _productApiClient;
         private readonly IConfiguration _configuration;
+        private readonly INotyfService _notyf;
 
-        public ProductController(IProductClient productApiClient, IConfiguration configuration)
+        public ProductController(IProductClient productApiClient, IConfiguration configuration, INotyfService notyf)
         {
             _productApiClient = productApiClient;
             _configuration = configuration;
+            _notyf = notyf;
         }
 
         public async Task<IActionResult> GetProductByCategory(int idCate)
@@ -69,6 +72,7 @@ namespace EcommerceWebsite.CustomerSite.Controllers
                     ListPro[i].Quantity += quantity;
 
                     HttpContext.Session.Set("SessionCart", ListPro);
+                    _notyf.Success("Thêm vào giỏ hàng thành công!", 4);
                     return Redirect(referer);
                 }
             }
@@ -90,7 +94,7 @@ namespace EcommerceWebsite.CustomerSite.Controllers
 
             ListPro.Add(x);
             HttpContext.Session.Set("SessionCart", ListPro);
-
+            _notyf.Success("Thêm vào giỏ hàng thành công!", 4);
             return Redirect(referer);
         }
     }
