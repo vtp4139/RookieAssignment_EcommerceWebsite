@@ -20,16 +20,20 @@ class Category extends React.Component {
         if (this.state.cookies.get('user') === undefined) {
             history.push('/login');
         }
-       
+
     }
 
     componentDidMount() {
-       //Show notify when return success requets
-       const getCookie = this.state.cookies;
-       if (getCookie.get('message')) {
-           toast.success(getCookie.get('message'));
-           getCookie.remove('message');
-       }
+        //Show notify when return success requets
+        const getCookie = this.state.cookies;
+        if (getCookie.get('message')) {
+            toast.success(getCookie.get('message'));
+            getCookie.remove('message');
+        }
+        else if (getCookie.get('message-error')) {
+            toast.error(getCookie.get('message-error'));
+            getCookie.remove('message-error');
+        }
 
         CategoryService.GetAllCategory().then((response) => {
             this.setState({
@@ -47,8 +51,14 @@ class Category extends React.Component {
                     label: 'Xác nhận',
                     onClick: () => {
                         CategoryService.DeleteCategory(id, this.state.cookies.get('user').access_token).then((response) => {
-                            this.state.cookies.set('message', "Xóa loại sản phẩm thành công!");
-                            window.location.reload();
+                            if (response.status == 204) {
+                                this.state.cookies.set('message-error', "Không thể xóa khi tồn tại sản phẩm có loại này!");
+                                window.location.reload();
+                            }
+                            else {
+                                this.state.cookies.set('message', "Xóa loại sản phẩm thành công!");
+                                window.location.reload();
+                            }
                         });
                     }
                 },
@@ -72,7 +82,7 @@ class Category extends React.Component {
                     <thead className="bg-info text-white">
                         <tr>
                             <th>Mã</th>
-                            <th>Tên loại</th>
+                            <th style={{ width: 100}}>Tên loại</th>
                             <th>Mô tả</th>
                             <th>Chức năng</th>
                         </tr>

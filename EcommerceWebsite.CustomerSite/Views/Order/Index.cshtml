@@ -19,9 +19,24 @@
                 <td style="text-align:center">@item.OrderDate</td>
                 <td style="text-align:center">
                     <a class="btn btn-success" asp-action="Detail" asp-route-id="@item.OrderID"><i class="fas fa-info-circle"></i>&nbsp;Chi tiết</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderID"><i class="fas fa-ban"></i>&nbsp;Hủy đơn</a>
+                    <button type="button" class="btn btn-danger" id="btn-regist" data-toggle="modal" data-target="#confirm-delete">Hủy đơn</button>
                 </td>
             </tr>
+            <!--Modal confirm Yes/No-->
+            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>Xác nhận hủy đơn đặt hàng ?</p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Thoát</button>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderID"><i class="fas fa-ban"></i>&nbsp;Hủy đơn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </table>
 }
@@ -34,6 +49,14 @@ else
         </div>
     </div>
 }
+
+<!--Handle modal-->
+<script type="text/javascript">
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+</script>
 
 
 

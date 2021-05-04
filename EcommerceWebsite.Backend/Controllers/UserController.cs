@@ -47,16 +47,5 @@ namespace EcommerceWebsite.Backend.Controllers
             }
             return UserVmList;
         }
-
-        [HttpGet]
-        [Route("roles")]
-        public ActionResult<bool> CheckRoles()
-        {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            List<string> roles = claimsIdentity.FindAll("role").Select(c => c.Value).ToList();
-            if (roles.Contains("admin"))
-                return Ok();
-            return NoContent();
-        }
     }
 }

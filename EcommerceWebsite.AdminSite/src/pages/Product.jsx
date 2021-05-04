@@ -33,6 +33,10 @@ class Product extends React.Component {
             toast.success(getCookie.get('message'));
             getCookie.remove('message');
         }
+        else if (getCookie.get('message-error')) {
+            toast.error(getCookie.get('message-error'));
+            getCookie.remove('message-error');
+        }
 
         ProductService.GetAllProduct().then((response) => {
             this.setState({
@@ -50,8 +54,14 @@ class Product extends React.Component {
                     label: 'Xác nhận',
                     onClick: () => {
                         ProductService.DeleteProduct(id, this.state.cookies.get('user').access_token).then((response) => {
-                            this.state.cookies.set('message', "Xóa sản phẩm thành công!");
-                            window.location.reload();
+                            if (response.status == 204) {
+                                this.state.cookies.set('message-error', "Không thể xóa khi sản phẩm đang có khách hàng đặt!");
+                                window.location.reload();
+                            }
+                            else {
+                                this.state.cookies.set('message', "Xóa sản phẩm thành công!");
+                                window.location.reload();
+                            }
                         });
                     }
                 },

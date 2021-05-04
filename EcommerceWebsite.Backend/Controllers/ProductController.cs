@@ -254,11 +254,15 @@ namespace EcommerceWebsite.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var Products = await _context.Products.Include(p => p.ImageFiles).FirstOrDefaultAsync(x => x.ProductID == id);
+            var Products = await _context.Products.Include(p => p.OrderDetails).Include(p => p.ImageFiles).FirstOrDefaultAsync(x => x.ProductID == id);
 
             if (Products == null)
             {
                 return NotFound();
+            }
+            else if(Products.OrderDetails.Count > 0)
+            {
+                return NoContent();
             }
 
             if (Products.ImageFiles != null && Products.ImageFiles.Count() > 0)
@@ -278,7 +282,7 @@ namespace EcommerceWebsite.Backend.Controllers
             _context.Products.Remove(Products);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(Products);
         }
     }
 }

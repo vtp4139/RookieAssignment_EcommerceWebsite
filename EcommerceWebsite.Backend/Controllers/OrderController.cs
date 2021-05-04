@@ -66,27 +66,7 @@ namespace EcommerceWebsite.Backend.Controllers
             return listItem;
         }
 
-        [HttpPut("{id}")]
-        //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> PutOrders(int id, OrderFormVm OrdersFormVm)
-        {
-            var Orders = await _context.Orders.FindAsync(id);
-
-            if (Orders == null)
-            {
-                return NotFound();
-            }
-
-            Orders.OrderDate = OrdersFormVm.OrderDate;
-            Orders.UserId = OrdersFormVm.UserId;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
         [HttpPost]
-        //[Authorize(Roles = "admin")]
         public async Task<ActionResult<OrderVm>> PostOrders(List<CartItemsVm> ListItem)
         {
             //Add order
@@ -115,7 +95,6 @@ namespace EcommerceWebsite.Backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteOrders(int id)
         {
             var Orders = await _context.Orders.FirstOrDefaultAsync(x => x.OrderID == id);
