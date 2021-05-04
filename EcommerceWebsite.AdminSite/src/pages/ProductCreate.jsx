@@ -129,7 +129,8 @@ class ProductCreate extends Component {
 
     DeleteImage(imageLocation) {
         const { cookies } = this.props;
-        var str = imageLocation.replaceAll("/", "%2F");
+        //var str = imageLocation.replaceAll("/", "%5F");
+        var str = imageLocation.replace("/images/","");
         console.log(str);
         ProductService.DeleteImage(str, cookies.get('user').access_token).then((response) => {
             window.location.reload();

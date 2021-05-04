@@ -185,7 +185,8 @@ namespace EcommerceWebsite.Backend.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteImages(string imageLocation)
         {
-            string str = imageLocation.Replace("%2F", "/");
+            //string str = imageLocation.Replace("_", "/");
+            string str = "/images/" + imageLocation;
             var Image = await _context.ImageFiles.FirstOrDefaultAsync(x => x.ImageLocation == str);
 
             if (Image == null)
